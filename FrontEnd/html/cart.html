@@ -6,43 +6,96 @@
     <script src="https://kit.fontawesome.com/e41a797fac.js" crossorigin="anonymous"></script>
     
     <link rel="stylesheet" href="./styles/index.css">
-    <title>Boat Lifestyle</title>
+    <link rel="stylesheet" href="/styles/cart.css">
+    <title>Boat Cart</title>
 </head>
 <body>
     <header class="main-header">
         <div class="header-container">
             <ul class="left">
-                <li>Home</li>
-                <li>About</li>
-                <li>Categories</li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html">Categories</a></li>
             </ul>
             <div class="center">BOAT_LIFESTYLE.</div>
             <div class="right">
+                <input type="text" class="search-input" placeholder="search any category">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <i class="fa-regular fa-heart"></i>
-                <i class="fa-solid fa-cart-shopping cart-icon">
+                <i class="fa-solid fa-cart-shopping cart-icon" id="cart-icon">
                     <span>5</span>
                 </i>
             </div>
         </div>
     </header>
 
-    <div class="hero-banner">
-        <div class="content">
-            <div class="text-content">
-                <h1>SALES</h1>
-                <p>
-                    Convallis interdum parus adipiscing dis partuient posuere ac a quam a eleifend montes parturient posuerer cureae tempor
-                </p>
-                <div class="ctas">
-                    <div class="banner-cta">Read More</div>
-                    <div class="banner-cta v2"> Shop Now </div>
+    <div class="cart-container">
+        <div class="layout">
+            <div class="cart-headings">
+                <h2>Shopping Cart</h2>
+                <div class="cupon-div">
+                    <input type="text" class="input-cupon" placeholder="got any cupons"> 
+                    <button class="apply-btn">Apply Cupon</button>
+                </div>
+                <div class="total-div">
+                    <span class="subtotal">SubTotal : </span>
+                    <span class="cart-total-amount">&#8377; 8000</span>
+                    <button id="checkout">CheckOut</button>
                 </div>
             </div>
-            <img src="/img/banner-img.png" class="banner-img" alt="hero-banner-img">
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-img">
+                        <img src="/img/products/earbuds-prod-4.webp" alt="">
+                        
+                    </div>
+                    <div class="card-details">
+                        <p class="name">Product Name</p>
+                        <p class="description">descripton Lorem ipsum dolor sit amet.</p>
+                        
+                        <span class="discount-price">Discount Price</span>
+                        <span class="price">Produdct Price</span> 
+                        <div class="quantity-buttons">
+                            <button class="decrease-btn">-</button>
+                            <button class="quantity-btn">5</button>
+                            <button class="increase-btn">+</button>
+                            <button class="remove-btn">Remove</button>
+                        </div>
+                        <div class="total-amount-div">
+                            <span>Total Amount</span> <span class="total-amount">&#8377;55555</span>
+                        </div>
+                        
+                    </div>
+                </div>
+    
+    
+                <div class="card">
+                    <div class="card-img">
+                        <img src="/img/products/earbuds-prod-4.webp" alt="">
+                        
+                    </div>
+                    <div class="card-details">
+                        <p class="name">Product Name</p>
+                        <p class="description">descripton Lorem ipsum dolor sit amet.</p>
+                        
+                        <span class="discount-price">Discount Price</span>
+                        <span class="price">Produdct Price</span> 
+                        <div class="quantity-buttons">
+                            <button class="decrease-btn">-</button>
+                            <button class="quantity-btn">5</button>
+                            <button class="increase-btn">+</button>
+                            <button class="remove-btn">Remove</button>
+                        </div>
+                        <div class="total-amount-div">
+                            <span>Total Amount</span> <span class="total-amount">&#8377;55555</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
-
 
     <div class="newsletter-section">
         <div class="newsletter-content">
@@ -113,5 +166,7 @@
         </div>
     </footer>
 
+    <script src="/scripts/cart.js"></script>
+    
 </body>
 </html>
