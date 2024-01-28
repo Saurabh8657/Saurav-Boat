@@ -134,6 +134,3 @@ function createProductsCard(item,index){
 
     return card ;
 }
-
-
-// hejlal
