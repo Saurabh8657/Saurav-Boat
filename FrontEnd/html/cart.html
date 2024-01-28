@@ -6,28 +6,108 @@
     <script src="https://kit.fontawesome.com/e41a797fac.js" crossorigin="anonymous"></script>
     
     <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="/styles/cart.css">
+    <link rel="stylesheet" href="../styles/cart.css">
     <title>Boat Cart</title>
 </head>
 <body>
     <header class="main-header">
         <div class="header-container">
             <ul class="left">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html"> <i class="fa-solid fa-house"></i> Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="index.html">Categories</a></li>
+                <li><a href="" id="navbar-categories" >Categories</a></li>
+                <li><a href="" id="navbar-signin" > <i class="fa-solid fa-user"></i> signin/signup</a></li>
             </ul>
             <div class="center">BOAT_LIFESTYLE.</div>
             <div class="right">
-                <input type="text" class="search-input" placeholder="search any category">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                
+                <i class="fa-solid fa-magnifying-glass" id="navbar-search" ></i>
                 <i class="fa-regular fa-heart"></i>
-                <i class="fa-solid fa-cart-shopping cart-icon" id="cart-icon">
+                <i class="fa-solid fa-cart-shopping cart-icon" id="navbar-cart-icon">
                     <span>5</span>
                 </i>
             </div>
         </div>
     </header>
+     <!-- ////////  for search result will show on search click -->
+    <div class="search-result-content">
+        <input type="text" class="search-input" placeholder="search any category">
+        <div class="search-heading-div">
+            <span class="search-result-heading">Search Results</span> 
+            <span class="search-result-close"><i class="fa-solid fa-xmark"></i></span>
+        </div>
+        <div class="search-result-list">
+            <div class="search-result-card">
+                <div class="image-container">
+                    <img src="../img/products/earbuds-prod-3.webp" alt="">
+                </div>
+                <div class="product-detalis">
+                    <div class="name">Product Name</div>
+                    <div class="description">Product desc</div>
+                </div>
+            </div>
+
+            <div class="search-result-card">
+                <div class="image-container">
+                    <img src="../img/products/earbuds-prod-3.webp" alt="">
+                </div>
+                <div class="product-detalis">
+                    <div class="name">Product Name</div>
+                    <div class="description">Product desc</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ////////  for login modal will show on login click -->
+
+    <div class="login-container">
+        <div class="container" id="container">
+            <div class="form-container sign-up">
+                <form>
+                    <h1>Create Account</h1>
+                    <div class="social-icons">
+                        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                        <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="icon"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                    <span>or use your email for registeration</span>
+                    <input type="text" placeholder="Name">
+                    <input type="email" placeholder="Email">
+                    <input type="password" placeholder="Password">
+                    <button>Sign Up</button>
+                </form>
+            </div>
+            <div class="form-container sign-in">
+                <form>
+                    <h1>Sign In</h1>
+                    <div class="social-icons">
+                        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                        <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="icon"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                    <span>or use your email password</span>
+                    <input type="email" placeholder="Email">
+                    <input type="password" placeholder="Password">
+                    <a href="#">→ Forget Your Password? ←</a>
+                    <button>Sign In</button>
+                </form>
+            </div>
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-left">
+                        <h1>Welcome Back!</h1>
+                        <p>Login to use all of site features</p>
+                        <button class="hidden" id="login">Sign In</button>
+                    </div>
+                    <div class="toggle-panel toggle-right">
+                        <h1>Hello, Friend!</h1>
+                        <p>Register with BOAT to use all of site features</p>
+                        <button class="hidden" id="register">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="cart-container">
         <div class="layout">
@@ -46,7 +126,7 @@
             <div class="card-container">
                 <div class="card">
                     <div class="card-img">
-                        <img src="/img/products/earbuds-prod-4.webp" alt="">
+                        <img src="../img/products/earbuds-prod-4.webp" alt="">
                         
                     </div>
                     <div class="card-details">
@@ -71,7 +151,7 @@
     
                 <div class="card">
                     <div class="card-img">
-                        <img src="/img/products/earbuds-prod-4.webp" alt="">
+                        <img src="../img/products/earbuds-prod-4.webp" alt="">
                         
                     </div>
                     <div class="card-details">

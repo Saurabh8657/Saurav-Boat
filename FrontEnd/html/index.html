@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/e41a797fac.js" crossorigin="anonymous"></script>
     <!-- ///for login modal -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> -->
 
     <link rel="stylesheet" href="../styles/index.css">
     <title>Boat Lifestyle</title>
@@ -16,8 +16,8 @@
             <ul class="left">
                 <li><a href="index.html"> <i class="fa-solid fa-house"></i> Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="" id="navbar-categories" >Categories</a></li>
-                <li><a href="" id="navbar-signin" > <i class="fa-solid fa-user"></i> signin/signup</a></li>
+                <li><a href="" id="navbar-categories-btn" >Categories</a></li>
+                <li class="navbar-signin-btn" ><a href=""> <i class="fa-solid fa-user"></i> signin/signup</a></li>
             </ul>
             <div class="center">BOAT_LIFESTYLE.</div>
             <div class="right">
@@ -60,9 +60,10 @@
         </div>
     </div>
     <!-- ////////  for login modal will show on login click -->
-
+    <div class="overlay-for-login"></div>
     <div class="login-container">
         <div class="container" id="container">
+            <div class="close-login">&times;</div>
             <div class="form-container sign-up">
                 <form>
                     <h1>Create Account</h1>
