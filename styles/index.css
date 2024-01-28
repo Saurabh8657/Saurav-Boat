@@ -421,14 +421,20 @@
 }
 
 .hero-banner {
-  padding: 20px 50px 150px 50px;
+  padding: 20px 50px 50px 50px;
   height: auto;
   position: relative;
   background-image: linear-gradient(to right, #Be2de2, #4a00e0);
 }
 @media only screen and (min-width: 768px) {
   .hero-banner {
-    padding: 20px 50px 180px 50px;
+    padding: 20px 50px 150px 50px;
+    height: calc(100vh - 80px);
+  }
+}
+@media screen and (min-width: 1280px) {
+  .hero-banner {
+    padding: 40px 50px 180px 50px;
     height: calc(100vh - 80px);
   }
 }
