@@ -1,26 +1,31 @@
-////login start
-const container = document.getElementById('container');
-const registerBtn = document.getElementById('register');
-const loginBtn = document.getElementById('login');
+///for cart modal
+let cartIcon = document.querySelector("#navbar-cart-icon") ;
+// let cartPanel = document.querySelector(".cart-panel") ; 
 
-registerBtn.addEventListener('click', () => {
-    container.classList.add("active");
-});
+let cartPanel = document.querySelector(".cart-panel") ;
+let opacLayer = document.querySelector(".opac-layer") ;
+let cartContent = document.querySelector(".cart-content") ;
 
-loginBtn.addEventListener('click', () => {
-    container.classList.remove("active");
-});
-/////login end
+cartIcon.addEventListener( "click", ()=>{
+    cartPanel.classList.add("show-cart") 
+}) 
 
-let navbarSigninBtn = document.querySelector(".navbar-signin-btn") ;
-navbarSigninBtn.addEventListener("click", ()=>{
-    let overlay = document.querySelector(".overlay-for-login") ;
-    overlay.classList.add("show-overlay-for-login") ;
-
-    let loginForm = document.querySelector(".login-container") ;
-    loginForm.classList.add("show-login-form") ;
-
-    console.log("clicked");
-    document.querySelector(".search-result-content").classList.add("red");
+/// for redirecting to payment
+let checkoutBtn = document.querySelector(".checkout-btn") ;
+checkoutBtn.addEventListener( "click", ()=>{
+    window.location.href = "payment.html" ;
 })
 
+
+/////////for banner crausal
+const bannerImgArray =["../img/banner-img.png","../img/banner-img.png","../img/banner-image-3.webp","../img/banner-image-5.webp","../img/banner-image-7.webp","../img/products/earbuds-prod-3.webp","../img/products/speaker-prod-1.webp","../img/products/headphone-prod-3.webp","../img/products/watch-prod-2.webp","../img/products/earbuds-prod-4.webp","../img/products/earbuds-prod-2.png"] ;
+let bannerImg = document.querySelector(".banner-img") ;
+let crausalIndex = 0;
+bannerImg.src = "";
+let id = setInterval(() => {
+    if(crausalIndex >= bannerImgArray.length){
+        crausalIndex = 0 ;
+    }
+    crausalIndex++
+    bannerImg.src = bannerImgArray[crausalIndex] ;
+}, 1500);

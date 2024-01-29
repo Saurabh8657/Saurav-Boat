@@ -1,0 +1,241 @@
+*body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-image: linear-gradient(to right, #Be2de2, #4a00e0);
+}
+.main-header{
+    padding: 0 80px 0 30px;
+    color: white;
+    border-bottom: 1px solid rgb(0, 0, 0,0.5);
+    z-index: 1;
+    @media only screen and (min-width: 768px){
+        padding: 0 40px;
+    }
+    .header-container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+        @media only screen and (min-width: 768px){
+            height: 80px;
+        }
+        .left{
+            list-style-type: none;
+            display: none;
+            @media only screen and (min-width: 768px){
+                display: flex;
+            }
+            li{
+                margin-right: 20px;
+                font-size: 14px;
+                font-weight: 600;
+                font-family: sans-serif;
+                text-transform: uppercase;
+                cursor: pointer;
+                a{
+                    text-decoration: none;
+                    color: white;
+                }
+            }
+        }
+        .center{
+            font-size: 22px;
+            font-weight: 800;
+            cursor: pointer;
+            @media only screen and (min-width: 768px){
+                font-size: 34px;
+                position: absolute ;
+                left: 50%;
+                transform: translate(-50%);
+
+            }
+        }
+        .right{
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            @media only screen and (min-width: 768px){
+                gap: 25px;
+            }
+            
+            i{
+                font-size: 20px;
+                cursor: pointer;
+                @media only screen and (min-width: 768px){
+                    font-size: 24px;
+                }
+            }
+            #navbar-cart-icon{
+                position: relative;
+                span{
+                    min-width: 20px;
+                    text-align: center;
+                    position: absolute;
+                    top: -8px;
+                    right: -15px;
+                    font-size: 10px;
+                    padding: 3px;   
+                    border-radius: 10px;
+                    background-color: #Be2de2;
+                    color: white;
+                }
+            }
+            .cart-icon:hover{
+                cursor: pointer;
+            }
+        }
+    }
+}
+.login-container{
+    padding: 20px 30px;
+    height: fit-content;
+    .container{
+        background-color: #fff;
+        z-index: 1;
+        border-radius: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+        // overflow: hidden;
+        width: 768px;
+        max-width: 100%;
+        height: fit-content;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        h2{
+            text-align: center;
+            font-size: 25px;
+            @media only screen and (min-width: 768px){
+                font-size: 30px;
+            }
+        }
+        #total-amount{
+            color: #850aa4;
+        }
+        .upi-options{
+            display: flex;
+            flex-direction: row;
+            margin: 0 auto;
+            width: calc(100% - 60px);
+            height: 40px;
+            gap: 50px;
+            .upi-div{
+                margin: 0 auto;
+                padding: 0 40px;
+                border-radius: 20px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+                gap: 20px;
+                cursor: pointer;
+                width: calc(30% - 30px);
+                height: 100%;
+                &:hover{
+                    background-color: rgba(0, 0, 0, 0.1);
+                }
+            }
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .card-options{
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            width: calc(100% - 60px);
+            height: 150px;
+            @media only screen and (min-width: 768px){
+                flex-direction: row;
+                height: 100px;
+            }
+            .card{
+                margin: 0 auto;
+                width: calc(100% - 60px);
+                height: 100%;
+                cursor: pointer;
+                transition: all 0.3s ease ; 
+                @media only screen and (min-width: 768px){
+                    width: calc(28% - 20px);
+                }
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            
+        }
+        .submit-details{
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - 100px);
+            input{
+                background-color: #eee;
+                border: none;
+                margin: 8px 0;
+                padding: 10px 15px;
+                font-size: 13px;
+                border-radius: 8px;
+                outline: none;
+                &:focus{
+                    outline: 0;
+                    border: 1px solid #4a00e0;
+                }
+            }
+            .expiry-div{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                .expiry-div-inside{
+                    display: flex;
+                    flex-direction: row;
+                    label{
+                        position: relative;
+                        top: 15px;
+                        left: 0;
+                    }
+                }
+            }
+            .submit-button{
+                margin: 20px auto;  
+                width: calc(100% - 60px);
+                background-color: #512da8;
+                color: #fff;
+                font-size: 12px;
+                padding: 10px 45px;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+                margin-top: 10px;
+                cursor: pointer;
+                transition: all 0.3s ease ;
+                &:hover{
+                    background-color: #4a00e0;
+                    transform: scale(0.95);
+                }
+                @media only screen and (min-width: 768px){
+                    font-size: 18px;
+                    padding: 10px 50px;
+                }
+            }
+        }
+    }
+}
+
+.scale-up{
+    transform: scale(1.2);
+}
+@keyframes slideFromRight{
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
+}

@@ -17,7 +17,7 @@
                 <li><a href="index.html"> <i class="fa-solid fa-house"></i> Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="" id="navbar-categories-btn" >Categories</a></li>
-                <li class="navbar-signin-btn" ><a href=""> <i class="fa-solid fa-user"></i> signin/signup</a></li>
+                <li class="navbar-signin-btn" ><a href="login.html"> <i class="fa-solid fa-user"></i> signin/signup</a></li>
             </ul>
             <div class="center">BOAT_LIFESTYLE.</div>
             <div class="right">
@@ -31,7 +31,7 @@
         </div>
     </header>
      <!-- ////////  for search result will show on search click -->
-    <div class="search-result-content">
+    <!-- <div class="search-result-content">
         <input type="text" class="search-input" placeholder="search any category">
         <div class="search-heading-div">
             <span class="search-result-heading">Search Results</span> 
@@ -58,73 +58,78 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- ////////  for login modal will show on login click -->
-    <div class="overlay-for-login"></div>
-    <div class="login-container">
-        <div class="container" id="container">
-            <div class="close-login">&times;</div>
-            <div class="form-container sign-up">
-                <form>
-                    <h1>Create Account</h1>
-                    <div class="social-icons">
-                        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-instagram"></i></a>
-                    </div>
-                    <span>or use your email for registeration</span>
-                    <input type="text" placeholder="Name">
-                    <input type="email" placeholder="Email">
-                    <input type="password" placeholder="Password">
-                    <button>Sign Up</button>
-                </form>
+    </div> -->
+
+    <!-- ////for cart -->
+    <div class="cart-panel">
+        <div class="opac-layer">
+            <span><i fass="fa-solid fa-xmark"></i></span>
+        </div>
+        <div class="cart-content">
+            <div class="cart-header">
+                <!-- <span class="close-btn"><i class="fa-solid fa-xmark"></i>Close</span> -->
+                <span class="heading">Your Cart</span>
             </div>
-            <div class="form-container sign-in">
-                <form>
-                    <h1>Sign In</h1>
-                    <div class="social-icons">
-                        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-instagram"></i></a>
-                    </div>
-                    <span>or use your email password</span>
-                    <input type="email" placeholder="Email">
-                    <input type="password" placeholder="Password">
-                    <a href="#">→ Forget Your Password? ←</a>
-                    <button>Sign In</button>
-                </form>
+            <!-- ////shorld visible on empty cart -->
+            <div class="empty-cart">
+                <i class="fa-solid fa-cart-shopping cart-icon"></i>
+                <span class="heading">Your cart is empty</span>
+                <button class="return-home" > Return to home</button>
             </div>
-            <div class="toggle-container">
-                <div class="toggle">
-                    <div class="toggle-panel toggle-left">
-                        <h1>Welcome Back!</h1>
-                        <p>Login to use all of site features</p>
-                        <button class="hidden" id="login">Sign In</button>
+
+
+            <div class="cart-products">
+                <div class="cart-product-list">
+                    <div class="img-container">
+                        <img src="/img/products/headphone-prod-1.webp" alt="">
                     </div>
-                    <div class="toggle-panel toggle-right">
-                        <h1>Hello, Friend!</h1>
-                        <p>Register with BOAT to use all of site features</p>
-                        <button class="hidden" id="register">Sign Up</button>
+                    <div class="prod-details">
+                        <div class="name">Product Name</div>
+                        <i class="fa-solid fa-xmark"></i>
+                        <div class="quantity-buttons">
+                            <span>-</span>
+                            <span>5</span>
+                            <span>+</span>
+                        </div>
+                        <div class="text">
+                            <span>3</span>
+                            <span>x</span>
+                            <span class="higlight" >&#8377;8000</span>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="cart-footer">
+                <div class="subtotal">
+                    <span class="text">SubTotal</span>
+                    <span class="text total">&#8377;8000</span>
+                </div>
+                <div class="cart-cupon">
+                    <input type="text" class="input-cupon" placeholder="got any cupons">
+                    <button class="apply-cupon-btn">Apply</button>
+                </div>
+                <div class="button">
+                    <button class="checkout-btn">CheckOut</button>
+                </div>
+            </div>
+
         </div>
     </div>
-    
 
     <div class="hero-banner">
         <div class="content">
             <div class="text-content">
-                <h1>SALES</h1>
+                <h1>  BOAT  </h1>
                 <p>
-                    Convallis interdum parus adipiscing dis partuient posuere ac a quam a eleifend montes parturient posuerer cureae tempor
+                    Discover Your Rhythm, Elevate Your Sound: Dive into a Symphony of Superior Music Products. From Earbuds to Speakers, We Amplify Your Melodic Journey. Unleash the Beat Within – Where Style Meets Sonic Innovation. Elevate Your Sound Experience Today!
                 </p>
                 <div class="ctas">
                     <div class="banner-cta">Read More</div>
                     <div class="banner-cta v2"> Shop Now </div>
                 </div>
             </div>
-            <img src="../img/banner-img.png" class="banner-img" alt="hero-banner-img">
+            <img src="/img/banner-image-6.webp" class="banner-img" alt="hero-banner-img">
         </div>
     </div>
 
