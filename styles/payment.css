@@ -207,8 +207,13 @@
 }
 .login-container .container .submit-details .expiry-div {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
+}
+@media only screen and (min-width: 768px) {
+  .login-container .container .submit-details .expiry-div {
+    flex-direction: row;
+  }
 }
 .login-container .container .submit-details .expiry-div .expiry-div-inside {
   display: flex;

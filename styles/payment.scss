@@ -188,8 +188,11 @@
             }
             .expiry-div{
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
                 justify-content: space-between;
+                @media only screen and (min-width: 768px){
+                    flex-direction: row;
+                }
                 .expiry-div-inside{
                     display: flex;
                     flex-direction: row;
@@ -228,9 +231,11 @@
     }
 }
 
+
 .scale-up{
     transform: scale(1.2);
 }
+
 @keyframes slideFromRight{
     0%{
         transform: translateX(100%);
