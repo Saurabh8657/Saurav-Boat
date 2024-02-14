@@ -33,10 +33,11 @@
                         <a href="#" class="icon"><i class="fa-brands fa-instagram"></i></a>
                     </div>
                     <span>or use your email for registeration</span>
-                    <input type="text" placeholder="Name" id="sign-up-name">
-                    <input type="email" placeholder="Email" id="sign-up-email">
-                    <input type="password" placeholder="Password" id="sign-up-password">
-                    <input type="password" placeholder="Confirm Password" id="sign-up-confirm-password">
+                    <input type="text" placeholder="Name" id="sign-up-name" class="name-signup">
+                    <input type="email" placeholder="Email" id="sign-up-email" class="email-signup">
+                    <input type="email" placeholder="Phone" id="phone" class="phone-signup">
+                    <input type="password" placeholder="Password" id="sign-up-password" class="password-signup">
+                    <input type="password" placeholder="Confirm Password" id="sign-up-confirm-password" class="confirm-password">
                     <button class="sign-up-btn" >Sign Up</button>
                 </form>
             </div>
@@ -52,7 +53,7 @@
                     <input type="email" placeholder="Email" id="login-email">
                     <input type="password" placeholder="Password" id="login-password">
                     <a href="#">→ Forget Your Password? ←</a>
-                    <button class="sign-in-btn">Sign In</button>
+                    <button class="sign-in-btn" id="loginbtnSign">Sign In</button>
                 </form>
             </div>
             <div class="toggle-container">
@@ -69,6 +70,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="toast success hiddentoast">
+        <div class="toast-message">
+            <span class="toast-text"></span>
+            <button class="toast-close">X</button>
         </div>
     </div>
 

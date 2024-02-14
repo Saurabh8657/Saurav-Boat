@@ -10,102 +10,199 @@ loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
 
-
-////////// validations
-
-const form = document.querySelector('form');
-const signUpName = document.querySelector('#sign-up-name');
-const signUpEmail = document.querySelector('#sign-up-email');
-const signUpPassword = document.querySelector('#sign-up-password');
-const signUpConfirmPassword = document.querySelector('#sign-up-confirm-password');
-const signUpBtn = document.querySelector('.sign-up-btn');
-
-signUpName.addEventListener('onkeyup', () => {
-    console.log(signUpName.value)
-    // if (signUpName.value.length < 3) {
-    //     setErrorFor(signUpName, 'Name must be greater than 3 characters');
-    // } else {
-    //     setSuccessFor(signUpName);
-    // }
-})
+let baseURL = "http://localhost:3000" ;
+let userURL = `${baseURL}/users`;
 
 
-const loginEmail = document.querySelector('#login-email');
-const loginPassword = document.querySelector('#login-password');
-const signInBtn = document.querySelector('.sign-in-btn');
+// let baseUrl = `https://mockserver-aq5n.onrender.com`;
+// let userURL = `${baseUrl}/users`;
 
-signInBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    validateSignIn();
-})
-signUpBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    validateSignUp();
-})
+let userData;
 
-const validateSignIn = () => {
-    const signInEmailValue = loginEmail.value.trim();
-    const signInPasswordValue = loginPassword.value.trim();
+async function fetchUsers() {
+  try {
+    let res = await fetch(`${userURL}`);
+    let data = await res.json();
+    console.log(data);
+    userData = data;
+  } catch (error) {
+    console.log(error);
+  }
 }
-const validateSignUp = () => {
-    const signUpNameValue = signUpName.value.trim();
-    const signUpEmailValue = signUpEmail.value.trim();
-    const signUpPasswordValue = signUpPassword.value.trim();
-    const signUpConfirmPasswordValue = signUpConfirmPassword.value.trim();
-    ////////name
-    if (signUpNameValue === '') {
-        setErrorFor(signUpName, 'Name cannot be blank');
-    }else if (signUpNameValue.length < 3) {
-        setErrorFor(signUpName, 'Name must be greater than 3 characters');
-    } else {
-        setSuccessFor(signUpName);
+fetchUsers() ;
+
+
+/// Login
+let loginemailInput = document.getElementById("login-email");
+let loginpasswordInput = document.getElementById("login-password");
+let siginBtn = document.getElementById("loginbtnSign");
+
+
+siginBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log("hi");
+  if (checkUsers(userData)) {
+    toastIntoAction("Login Successful", "success");
+    setTimeout(() => {
+      window.location.href = "index.html";
+    },1200)
+   
+  } else {
+    toastIntoAction("User doesnot exist or Invalid Credentials", "alert");
+  }
+});
+function checkUsers(userData) {
+  let obj = {
+    email: loginemailInput.value,
+    password: loginpasswordInput.value,
+  };
+  for (let i = 0; i < userData.length; i++) {
+    if (
+      userData[i].email == obj.email  &&
+      userData[i].password == obj.password
+    ) {
+      putUsersIntoLocal(userData[i]);
+      return true;
     }
-    //////////email
-    if(signUpEmailValue === '') {
-        setErrorFor(signUpEmail, 'Email cannot be blank');
-    }else if(!isEmail(signUpEmailValue)) {
-        setErrorFor(signUpEmail, 'Email is not valid');
-    }else {
-        setSuccessFor(signUpEmail);
-    }
-    ////////password
-    if(signUpPasswordValue === '') {
-        setErrorFor(signUpPassword, 'Password cannot be blank');
-    }else if(signUpPasswordValue.length < 8) {
-        setErrorFor(signUpPassword, 'Password must be greater than 8 characters');
-    } else {
-        setSuccessFor(signUpPassword);
-    }
-    ////////confirm password
-    if(signUpConfirmPasswordValue === '') {
-        setErrorFor(signUpConfirmPassword, 'Password cannot be blank');
-    }else if(signUpConfirmPasswordValue !== signUpPasswordValue) {
-        setErrorFor(signUpConfirmPassword, 'Password does not match');
-    } else {
-        setSuccessFor(signUpConfirmPassword);
-    }
+  }
+  return false;
 }
 
-
-function isEmail(signUpEmailValue){
-    let atSymbol = signUpEmailValue.indexOf('@');
-    if (atSymbol < 1) return false;
-
-    let dot = signUpEmailValue.lastIndexOf('.');
-    if (dot <= atSymbol + 2) return false;
-    if (dot === signUpEmailValue.length - 1) return false;
-
-    return true;
-
-    // return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(signUpEmailValue);
+function putUsersIntoLocal(user) {
+  localStorage.setItem("user", JSON.stringify(user));
 }
 
-function setErrorFor(input, message) {
-    const formControl = input.parentElement;
-    const small = formControl.createElement('small');
-    small.innerText = message;
-    formControl.appendChild(small);
-    console.log("formControl");
-    formControl.className = 'container error';
-    small.innerText = message;
+/// Toast
+let toast = document.querySelector(".toast");
+let toastText = document.querySelector(".toast-text");
+let toastClose = document.querySelector(".toast-close");
+
+function toastIntoAction(params, type){
+  toastText.innerText = params;
+  //  toast.classList.remove("hidden");
+  toast.className = "";
+  toast.classList.add(`${type}`, "toast");
+  toastClose.addEventListener("click", ()=>{
+     toast.classList.add("hiddentoast");
+  })
+  setTimeout(()=>{
+      toast.classList.add("hiddentoast");
+  },4000)
 }
+
+
+//Signup
+let signupNameInput = document.querySelector(".name-signup");
+let signupEmailInput = document.querySelector(".email-signup");
+let signupPhoneInput = document.querySelector(".phone-signup");
+let signupPasswordInput = document.querySelector(".password-signup");
+let signupConfirmPasswordInput = document.querySelector(".confirm-password");
+let signupBtn = document.querySelector(".sign-up-btn");
+
+async function addUser(newUser){
+    try{
+        let response = await fetch(`${userURL}`,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(newUser)
+        })
+        let data = await response.json();
+        console.log(data);
+        fetchUsers() ;
+        // addCartForUser() ;
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+// async function addCartForUser(){
+//   try{
+//     cartObj={
+//         id:userData.length-1,
+//         userId:userData.length+1
+//     }
+//       let response = await fetch(`${baseURL}/carts`,{
+//           method:"POST",
+//           headers:{"Content-Type":"application/json"},
+//           body:JSON.stringify(newUser)
+//       })
+//       let data = await response.json();
+//       console.log(data);
+//       fetchUsers() ;
+//       addCartForUser() ;
+//   }
+//   catch(error){
+//       console.log(error);
+//   }
+// }
+
+function checkExistingUsers(data) {
+  let obj = {
+    email: signupEmailInput.value,
+    phone: signupPhoneInput.value,
+  };
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].email == obj.email || data[i].phone == obj.phone) {
+      return true;
+    }
+  }
+  return false;
+}
+
+signupBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (
+    !signupNameInput.value ||
+    !signupEmailInput.value ||
+    !signupPhoneInput.value ||
+    !signupPasswordInput.value ||
+    !signupConfirmPasswordInput.value
+  ) {
+    toastIntoAction("All fields are required. Please fill in all the fields.", "alert");
+    return; // Prevent further execution
+  }
+  if(signupPhoneInput.value?.length<10){
+    toastIntoAction("Phone number must be a 10 digit number!","alert");
+    return;
+  }
+  if (signupPasswordInput.value !== signupConfirmPasswordInput.value) {
+    toastIntoAction("Passwords do not match. Please try again.", "alert");
+    return;
+  }
+  if(!validatePassword(signupPasswordInput.value)){
+    toastIntoAction("Password should contain 1 special character one number and one uppercase letter and atleast 8 characters", "alert");
+    return;
+  }
+  if (checkExistingUsers(userData)) {
+    toastIntoAction(
+      "Account Already Exists with this Email or Phone Number. Please SignIn!", "alert"
+    );
+  } else {
+    let newUser = {
+      id: userData.length + 1,
+      Name: signupNameInput.value,
+      email: signupEmailInput.value,
+      phone: signupPhoneInput.value,
+      password: signupConfirmPasswordInput.value
+    };
+    addUser(newUser) ;
+    window.location.href = "login.html" ;
+  }
+});
+
+
+
+function validatePassword(password) {
+  // Password validation criteria
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  const isLongEnough = password.length >= 8;
+
+  // Check all criteria are met
+  return hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isLongEnough;
+}
+
+
+
