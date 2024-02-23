@@ -1,3 +1,4 @@
+//------------------ login modal   --------------//
 const container = document.getElementById('container');
 const registerBtn = document.getElementById('register');
 const loginBtn = document.getElementById('login');
@@ -9,13 +10,11 @@ registerBtn.addEventListener('click', () => {
 loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
+//------------------ login modal   --------------//
 
-let baseURL = "http://localhost:3000" ;
+
+let baseURL = "https://zany-seal-pantsuit.cyclic.app/" ;
 let userURL = `${baseURL}/users`;
-
-
-// let baseUrl = `https://mockserver-aq5n.onrender.com`;
-// let userURL = `${baseUrl}/users`;
 
 let userData;
 
@@ -109,32 +108,32 @@ async function addUser(newUser){
         let data = await response.json();
         console.log(data);
         fetchUsers() ;
-        // addCartForUser() ;
+        addCartForUser() ;
     }
     catch(error){
         console.log(error);
     }
 }
-// async function addCartForUser(){
-//   try{
-//     cartObj={
-//         id:userData.length-1,
-//         userId:userData.length+1
-//     }
-//       let response = await fetch(`${baseURL}/carts`,{
-//           method:"POST",
-//           headers:{"Content-Type":"application/json"},
-//           body:JSON.stringify(newUser)
-//       })
-//       let data = await response.json();
-//       console.log(data);
-//       fetchUsers() ;
-//       addCartForUser() ;
-//   }
-//   catch(error){
-//       console.log(error);
-//   }
-// }
+async function addCartForUser(){
+  try{
+    cartObj={
+        id:userData.length+1,
+        userId:userData.length+1
+    }
+      let response = await fetch(`${baseURL}/carts`,{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify(newUser)
+      })
+      let data = await response.json();
+      console.log(data);
+      // fetchUsers() ;
+      // addCartForUser() ;
+  }
+  catch(error){
+      console.log(error);
+  }
+}
 
 function checkExistingUsers(data) {
   let obj = {

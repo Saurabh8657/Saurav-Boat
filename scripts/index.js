@@ -1,43 +1,68 @@
-let baseURL = "http://localhost:3000" ;
+//------------ URL'S ---------------//
+
+let baseURL = "https://zany-seal-pantsuit.cyclic.app/" ;
+let headphonesURL = `${baseURL}/headphones`;
+let airpodsURL = `${baseURL}/airpods`;
+let bluetoothSpeakersURL = `${baseURL}/bluetoothSpeaker`;
+let smartWatchURL = `${baseURL}/smartWatches`;
 let userURL = `${baseURL}/users`;
 
-/////////// essentials fetching
+
+let headphoneList ;
+let airpodsList ;
+let bluetoothSpeakerList ;
+let smartWatcheList ;
+
+let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
+let loggedInUserCart ;
+
+
+//------------ essentials fetching  ---------------//
 async function fetchProductsHeadphones() {
     try{
-        let res = await fetch(`${baseURL}/headphones`);
+        let res = await fetch(`${headphonesURL}`);
         let data = await res.json();
-        console.log(data);
-        localStorage.setItem("headphones", JSON.stringify(data));
+        console.log("Headphones",data);
+        headphoneList = data;
+        headphoneListDiv.innerHTML = "";
+        appendProductsToDOM( headphoneList, headphoneListDiv );
+        // localStorage.setItem("headphones", JSON.stringify(data));
     }catch(error){
         console.log(error);
     }
 }
 async function fetchProductsAirpods() {
     try{
-        let res = await fetch(`${baseURL}/airpods`);
+        let res = await fetch(`${airpodsURL}`);
         let data = await res.json();
-        console.log(data);
-        localStorage.setItem("airpods", JSON.stringify(data));
+        console.log("Airpods",data);
+        airpodsList = data;
+        // localStorage.setItem("airpods", JSON.stringify(data));
     }catch(error){
         console.log(error);
     }
 }
 async function fetchProductsBlutoothSpeakers() {
     try{
-        let res = await fetch(`${baseURL}/bluetoothSpeaker`);
+        let res = await fetch(`${bluetoothSpeakersURL}`);
         let data = await res.json();
-        console.log(data);
-        localStorage.setItem("bluetoothSpeaker", JSON.stringify(data));
+        console.log("BlutoothSpeakers",data);
+        bluetoothSpeakerList = data;
+        // localStorage.setItem("bluetoothSpeaker", JSON.stringify(data));
     }catch(error){
         console.log(error);
     }
 }
-async function fetchProductsNeckbands() {
+async function fetchProductsSmartWatches() {
     try{
-        let res = await fetch(`${baseURL}/neckband`);
+        let res = await fetch(`${smartWatchURL}`);
         let data = await res.json();
-        console.log(data);
-        localStorage.setItem("neckband", JSON.stringify(data));
+        console.log("SmartWatches",data);
+        smartWatcheList = data;
+        console.log(smartWatcheList);
+        smartWatchListDiv.innerHTML = "";
+        appendProductsToDOM( smartWatcheList, smartWatchListDiv );
+        // localStorage.setItem("neckband", JSON.stringify(data));
     }catch(error){
         console.log(error);
     }
@@ -45,19 +70,15 @@ async function fetchProductsNeckbands() {
 fetchProductsHeadphones();
 fetchProductsAirpods();
 fetchProductsBlutoothSpeakers();
-fetchProductsNeckbands();
-let headphonesList = JSON.parse(localStorage.getItem("headphones"));
-let airpodsList = JSON.parse(localStorage.getItem("airpods"));
-let bluetoothSpeakerList = JSON.parse(localStorage.getItem("bluetoothSpeaker"));
-let neckbandList = JSON.parse(localStorage.getItem("neckband"));
+fetchProductsSmartWatches();
 
-async function fetchCart() {
+async function fetchCartOfLoggedInUser() {
     try {
         let res = await fetch(`${baseURL}/carts`);
         let data = await res.json();
-        console.log(data);
+        console.log("Carts",data);
         for (const cart of data) {
-            if (cart.id === userData.id) {
+            if (cart.userId === loggedInUser.id) {
                 localStorage.setItem("cart", JSON.stringify(cart));
                 break;
             }
@@ -66,15 +87,14 @@ async function fetchCart() {
         console.log(error);
     }
 }
-fetchCart();
-let cartItemList = JSON.parse(localStorage.getItem("cart"));
+if(loggedInUser){
+    fetchCartOfLoggedInUser();
+}
 
 
-
-////for showing logged in user
-let signinBtn = document.querySelector(".navbar-signin-btn") ; 
-let userData = JSON.parse(localStorage.getItem("user"));
-// signinBtn.innerText = `Hi ${userData.Name}`
+//----------- for showing logged in user  -----------//
+let signinBtn = document.querySelector(".navbar-signin-btn") ;
+signinBtn.innerText = `Hi ${loggedInUser.firstName}`;
 signinBtn.addEventListener("click", ()=>{
     if(signinBtn.innerText === "SIGNIN/SIGNUP"){
         window.location.href = "login.html";
@@ -85,7 +105,7 @@ signinBtn.addEventListener("click", ()=>{
     }
 })
 
-///for cart modal
+//------------- for cart modal  -----------------//
 let cartIcon = document.querySelector("#navbar-cart-icon") ;
 
 let cartPanel = document.querySelector(".cart-panel") ;
@@ -96,7 +116,7 @@ cartIcon.addEventListener( "click", ()=>{
     cartPanel.classList.add("show-cart") 
 }) 
 
-///for navbar search
+//--------------- for navbar search --------------//
 let searchIcon = document.querySelector("#navbar-search") ;
 searchIcon.addEventListener( "click", ()=>{
     // Create search result content container
@@ -200,147 +220,83 @@ searchIcon.addEventListener( "click", ()=>{
 
 })
 
-/// for redirecting to payment
+//------------- for redirecting to payment page  -----------------//
 let checkoutBtn = document.querySelector(".checkout-btn") ;
 checkoutBtn.addEventListener( "click", ()=>{
     window.location.href = "payment.html" ;
 })
 
 
-/////////for banner crausal
+//------------- for banner crausal -----------------//
 const bannerImgArray =["../img/banner-img.png","../img/banner-img.png","../img/banner-image-3.webp","../img/banner-image-5.webp","../img/banner-image-7.webp","../img/products/earbuds-prod-3.webp","../img/products/speaker-prod-1.webp","../img/products/headphone-prod-3.webp","../img/products/watch-prod-2.webp","../img/products/earbuds-prod-4.webp","../img/products/earbuds-prod-2.png"] ;
 let bannerImg = document.querySelector(".banner-img") ;
 let crausalIndex = 0;
-// bannerImg.src = "";
 let id = setInterval(() => {
     if(crausalIndex >= bannerImgArray.length){
-        crausalIndex = 0 ;
+        crausalIndex = 1 ;
     }
     crausalIndex++
     bannerImg.src = bannerImgArray[crausalIndex] ;
 }, 1500);
 
-//////////////////////////////////////////////////
 
-// let baseUrl = `https://mockserver-aq5n.onrender.com`;
-// let passbookUrl = `${baseUrl}/passbook`;
-// let userUrl = `${baseUrl}/users`;
-// let profilePicture = document.getElementById("profile-picture")
-// let passbookArray = document.querySelector(".transactions-wrapper");
-// let userName = document.querySelector("#user-name");
-// // let totalBalance = document.querySelector(".total-balance-amount");
-// // let passbookData;
-// // let userData = JSON.parse(localStorage.getItem("user"));
-// let addToWallet = document.getElementById("wallet");
-
-
-// function appendToDOM(customers) {
-//     passbookArray.innerHTML = "";
-//     // let h3 = document.createElement("h3");
-//     // h3.id = "transaction";
-//     // h3.innerText = "Transactions";
-//     // passbookArray.append(h3);
-//     for(let i=customers.length-1; i>=customers.length-3 && i>-1; i--){
-//         let customer1 = singleCard(customers[i]);
-//         passbookArray.append(customer1)
-//     }
-// }
+//------------- for search result list -----------------//
+let headphonesCategory = document.querySelector("#headphones-category") ;
+let speakersCategory = document.querySelector("#speakers-category") ;
+let smartWatchesCategory = document.querySelector("#smartWatch-category") ;
+let airpodsCategory = document.querySelector("#airpods-category") ;
+headphonesCategory.addEventListener("click", ()=>{
+    window.location.href = "headphones.html";
+})
+speakersCategory.addEventListener("click", ()=>{
+    window.location.href = "blutooth_speakers.html";
+})
+smartWatchesCategory.addEventListener("click", ()=>{
+    window.location.href = "smart_watch.html";
+})
+airpodsCategory.addEventListener("click", ()=>{
+    window.location.href = "airpods.html";
+})
 
 
-// function singleCard(item) {
-//     let singleCard = document.createElement("div");
-//     singleCard.className = "singlecustomer";
+let headphoneListDiv = document.querySelector(".headphone-list") ;
+let smartWatchListDiv = document.querySelector(".smartWatch-list") ;
+// let smartWatchesListDiv = document.querySelector(".smart-watches-list") ;
+// let earbudsCategory = document.querySelector("#earbuds-category") ;
 
-//     let imageBox = document.createElement("div")
-//     imageBox.className = "image_r";
-
-//     let image = document.createElement("img")
-//     image.src = "https://as2.ftcdn.net/v2/jpg/00/75/13/25/1000_F_75132523_xkLZqbPQkUvVzWSftTf3nAGBjBFkcKuP.jpg"
-//     image.alt = "customer";
-//     imageBox.append(image)
-
-//     let customerDetail = document.createElement("div");
-//     customerDetail.className = "customerDetails"
-
-//     let customerStatus = document.createElement("div");
-//     customerStatus.classList.add("name_status", "common");
-
-//     let name = document.createElement("h5");
-//     name.className = "h5";
-//     name.innerText = item.from ? item.from : userData.firstName ;
-
-//     let status = document.createElement("p");
-//     if(item.type === "debit"){
-//         status.innerText = `${item.title} to ${item.recipient}`;
-//     }else{
-//         status.innerText = `${item.title} from ${item.from}`;
-//     }
-//     customerStatus.append(name, status)
-
-//     let ammountBox = document.createElement("div");
-//     ammountBox.classList.add("amount", "common");
-
-//     let amount = document.createElement("h5")
-//     amount.className = "dollar";
-//     if (item.type === 'credit') {
-//         amount.innerText = `+$${item.amount} `
-//         amount.style.color = 'green'
-//     } else {
-//         amount.innerText = `-$${item.amount} `
-//         amount.style.color = 'red'
-//     }
-
-//     let date = document.createElement("p");
-//     date.innerText = item.date;
-//     ammountBox.append(amount, date)
-
-//     customerDetail.append(customerStatus, ammountBox)
-//     singleCard.append(imageBox, customerDetail)
-
-//     return singleCard
-// }
-
-// async function fetchData(id) {
-//     try {
-//         let res = await fetch(`${passbookUrl}/${id}`);
-//         let data = await res.json();
-//         passbookData = data;
-//         if(passbookData.transactions.length === 0){
-//             printEmpty();
-//         }else{
-//             appendToDOM(passbookData.transactions);
-//         }
-//         // appendToDOM(passbookData.transactions);
-//         profilePictureChange(userData)
-//         totalBalanceDynamic(passbookData);
-
-//         console.log(data);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-// fetchData(userData.id);
-
-// function printEmpty(){
-//     return passbookArray.innerText = `No transactions yet!`;
-// }
-
-// function userCardDynamic(item){
-//     userName.innerText = `${item.firstName} ${item.lastName}.`;
-// }
-// userCardDynamic(userData);
+function appendProductsToDOM(productList, appendingDiv) {
+    console.log(productList);
+    productList?.forEach( (item,index) => {
+        let card = createProdudctCard(item,index);
+        appendingDiv.append(card);
+    });
+}
 
 
-// function totalBalanceDynamic(item){
-//     console.log(item)
-//     totalBalance.innerText = `$${item.amount}.00`;
-// }
 
-// function profilePictureChange(userData){
-//     console.log(userData.userImage);
-//     profilePicture.src=`${userData.userImage}`
-// };
+function createProdudctCard(item,index){
+    let card = document.createElement("div");
+    card.className = "product-card";
 
-// addToWallet.addEventListener("click", ()=>{
-//     localStorage.setItem("wallet", JSON.stringify(true));
-// })
+    let thumbnail = document.createElement("div");
+    thumbnail.className = "thumbnail";
+    let cardImg = document.createElement("img");
+    cardImg.src = `${item.image}`;
+    cardImg.alt = "Product Image";
+
+    let productDetails = document.createElement("div");
+    productDetails.className = "product-details";
+    let name = document.createElement("div");
+    name.className = "name";
+    name.innerText = `${item.productName}`;
+
+    let price = document.createElement("div");
+    price.className = "price";
+    price.innerText = `${item.price}`;
+
+    thumbnail.append(cardImg);
+    productDetails.append(name,price);
+
+    card.append(thumbnail,productDetails);
+    return card ;
+}
