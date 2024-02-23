@@ -14,7 +14,7 @@ let bluetoothSpeakerList ;
 let smartWatcheList ;
 
 let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
-let loggedInUserCart ;
+let loggedInUserCart = JSON.parse(localStorage.getItem("user")) || null ;
 
 
 //------------ essentials fetching  ---------------//
@@ -94,7 +94,9 @@ if(loggedInUser){
 
 //----------- for showing logged in user  -----------//
 let signinBtn = document.querySelector(".navbar-signin-btn") ;
-signinBtn.innerText = `Hi ${loggedInUser.firstName}`;
+if(loggedInUser){
+    signinBtn.innerText = `Hi ${loggedInUser.firstName}`
+}
 signinBtn.addEventListener("click", ()=>{
     if(signinBtn.innerText === "SIGNIN/SIGNUP"){
         window.location.href = "login.html";
@@ -240,7 +242,7 @@ let id = setInterval(() => {
 }, 1500);
 
 
-//------------- for search result list -----------------//
+//------------- for category click redirecting -----------------//
 let headphonesCategory = document.querySelector("#headphones-category") ;
 let speakersCategory = document.querySelector("#speakers-category") ;
 let smartWatchesCategory = document.querySelector("#smartWatch-category") ;

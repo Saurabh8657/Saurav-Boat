@@ -14,7 +14,7 @@ let headphoneList ;
 // let smartWatcheList ;
 
 let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
-// let loggedInUserCart ;
+let loggedInUserCart = JSON.parse(localStorage.getItem("cart")) || null ;
 
 
 //------------ essentials fetching  ---------------//
@@ -230,19 +230,19 @@ checkoutBtn.addEventListener( "click", ()=>{
 
 
 //------------- for banner crausal -----------------//
-const bannerImgArray =["../img/banner-img.png","../img/banner-img.png","../img/banner-image-3.webp","../img/banner-image-5.webp","../img/banner-image-7.webp","../img/products/earbuds-prod-3.webp","../img/products/speaker-prod-1.webp","../img/products/headphone-prod-3.webp","../img/products/watch-prod-2.webp","../img/products/earbuds-prod-4.webp","../img/products/earbuds-prod-2.png"] ;
-let bannerImg = document.querySelector(".banner-img") ;
-let crausalIndex = 0;
-let id = setInterval(() => {
-    if(crausalIndex >= bannerImgArray.length){
-        crausalIndex = 1 ;
-    }
-    crausalIndex++
-    bannerImg.src = bannerImgArray[crausalIndex] ;
-}, 1500);
+// const bannerImgArray =["../img/banner-img.png","../img/banner-img.png","../img/banner-image-3.webp","../img/banner-image-5.webp","../img/banner-image-7.webp","../img/products/earbuds-prod-3.webp","../img/products/speaker-prod-1.webp","../img/products/headphone-prod-3.webp","../img/products/watch-prod-2.webp","../img/products/earbuds-prod-4.webp","../img/products/earbuds-prod-2.png"] ;
+// let bannerImg = document.querySelector(".banner-img") ;
+// let crausalIndex = 0;
+// let id = setInterval(() => {
+//     if(crausalIndex >= bannerImgArray.length){
+//         crausalIndex = 1 ;
+//     }
+//     crausalIndex++
+//     bannerImg.src = bannerImgArray[crausalIndex] ;
+// }, 1500);
 
 
-//------------- for search result list -----------------//
+//------------- for category click redirecting -----------------//
 let headphonesCategory = document.querySelector("#headphones-category") ;
 let speakersCategory = document.querySelector("#speakers-category") ;
 let smartWatchesCategory = document.querySelector("#smartWatch-category") ;
@@ -262,7 +262,7 @@ airpodsCategory.addEventListener("click", ()=>{
 
 
 let headphoneListDiv = document.querySelector(".headphone-list") ;
-let smartWatchListDiv = document.querySelector(".smartWatch-list") ;
+// let smartWatchListDiv = document.querySelector(".smartWatch-list") ;
 // let smartWatchesListDiv = document.querySelector(".smart-watches-list") ;
 // let earbudsCategory = document.querySelector("#earbuds-category") ;
 
