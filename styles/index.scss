@@ -12,8 +12,8 @@
     color: white;
     border-bottom: 1px solid rgb(0, 0, 0,0.5);
     z-index: 1;
-    // position: sticky;
-    // top: 0;
+    position: sticky;
+    top: 0;
     @media only screen and (min-width: 768px){
         padding: 0 40px;
     }
@@ -368,10 +368,13 @@
         transform: translateX(0);
     }
 }
-
+.hide{
+    display: none;
+}
 .search-result-content{
     max-width: calc(100% - 20px);
     margin: 0 auto;
+
     @media only screen and (min-width: 768px){
         max-width: 800px;
     }

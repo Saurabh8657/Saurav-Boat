@@ -1,6 +1,6 @@
 //------------ URL'S ---------------//
 
-let baseURL = "https://zany-seal-pantsuit.cyclic.app/" ;
+let baseURL = "https://boat-mock-server.onrender.com" ;
 let headphonesURL = `${baseURL}/headphones`;
 let airpodsURL = `${baseURL}/airpods`;
 let bluetoothSpeakersURL = `${baseURL}/bluetoothSpeaker`;
@@ -8,69 +8,28 @@ let smartWatchURL = `${baseURL}/smartWatches`;
 let userURL = `${baseURL}/users`;
 
 
-let headphoneList ;
-let airpodsList ;
 let bluetoothSpeakerList ;
-let smartWatcheList ;
 
 let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
-let loggedInUserCart ;
-
+let loggedInUserCart = JSON.parse(localStorage.getItem("user")) || null ;
+if(loggedInUser){
+    fetchCartOfLoggedInUser();
+}
 
 //------------ essentials fetching  ---------------//
-async function fetchProductsHeadphones() {
-    try{
-        let res = await fetch(`${headphonesURL}`);
-        let data = await res.json();
-        console.log("Headphones",data);
-        headphoneList = data;
-        headphoneListDiv.innerHTML = "";
-        appendProductsToDOM( headphoneList, headphoneListDiv );
-        // localStorage.setItem("headphones", JSON.stringify(data));
-    }catch(error){
-        console.log(error);
-    }
-}
-async function fetchProductsAirpods() {
-    try{
-        let res = await fetch(`${airpodsURL}`);
-        let data = await res.json();
-        console.log("Airpods",data);
-        airpodsList = data;
-        // localStorage.setItem("airpods", JSON.stringify(data));
-    }catch(error){
-        console.log(error);
-    }
-}
 async function fetchProductsBlutoothSpeakers() {
     try{
         let res = await fetch(`${bluetoothSpeakersURL}`);
         let data = await res.json();
         console.log("BlutoothSpeakers",data);
         bluetoothSpeakerList = data;
-        // localStorage.setItem("bluetoothSpeaker", JSON.stringify(data));
+        bluetoothSpeakersListDiv.innerHTML = "";
+        appendProductsToDOM( bluetoothSpeakerList, bluetoothSpeakersListDiv); 
     }catch(error){
         console.log(error);
     }
 }
-async function fetchProductsSmartWatches() {
-    try{
-        let res = await fetch(`${smartWatchURL}`);
-        let data = await res.json();
-        console.log("SmartWatches",data);
-        smartWatcheList = data;
-        console.log(smartWatcheList);
-        smartWatchListDiv.innerHTML = "";
-        appendProductsToDOM( smartWatcheList, smartWatchListDiv );
-        // localStorage.setItem("neckband", JSON.stringify(data));
-    }catch(error){
-        console.log(error);
-    }
-}
-fetchProductsHeadphones();
-fetchProductsAirpods();
 fetchProductsBlutoothSpeakers();
-fetchProductsSmartWatches();
 
 async function fetchCartOfLoggedInUser() {
     try {
@@ -79,6 +38,7 @@ async function fetchCartOfLoggedInUser() {
         console.log("Carts",data);
         for (const cart of data) {
             if (cart.userId === loggedInUser.id) {
+                loggedInUserCart = cart;
                 localStorage.setItem("cart", JSON.stringify(cart));
                 break;
             }
@@ -87,14 +47,15 @@ async function fetchCartOfLoggedInUser() {
         console.log(error);
     }
 }
-if(loggedInUser){
-    fetchCartOfLoggedInUser();
-}
+
 
 
 //----------- for showing logged in user  -----------//
+//----------- for redirecting to profile and admin  -----------//
 let signinBtn = document.querySelector(".navbar-signin-btn") ;
-signinBtn.innerText = `Hi ${loggedInUser.firstName}`;
+if(loggedInUser){
+    signinBtn.innerText = `Hi ${loggedInUser.firstName}`
+}
 signinBtn.addEventListener("click", ()=>{
     if(signinBtn.innerText === "SIGNIN/SIGNUP"){
         window.location.href = "login.html";
@@ -229,18 +190,18 @@ checkoutBtn.addEventListener( "click", ()=>{
 
 //------------- for banner crausal -----------------//
 const bannerImgArray =["../img/banner-img.png","../img/banner-img.png","../img/banner-image-3.webp","../img/banner-image-5.webp","../img/banner-image-7.webp","../img/products/earbuds-prod-3.webp","../img/products/speaker-prod-1.webp","../img/products/headphone-prod-3.webp","../img/products/watch-prod-2.webp","../img/products/earbuds-prod-4.webp","../img/products/earbuds-prod-2.png"] ;
-let bannerImg = document.querySelector(".banner-img") ;
-let crausalIndex = 0;
-let id = setInterval(() => {
-    if(crausalIndex >= bannerImgArray.length){
-        crausalIndex = 1 ;
-    }
-    crausalIndex++
-    bannerImg.src = bannerImgArray[crausalIndex] ;
-}, 1500);
+// let bannerImg = document.querySelector(".banner-img") ;
+// let crausalIndex = 0;
+// let id = setInterval(() => {
+//     if(crausalIndex >= bannerImgArray.length){
+//         crausalIndex = 1 ;
+//     }
+//     crausalIndex++
+//     bannerImg.src = bannerImgArray[crausalIndex] ;
+// }, 1500);
 
 
-//------------- for search result list -----------------//
+//------------- for category click redirecting -----------------//
 let headphonesCategory = document.querySelector("#headphones-category") ;
 let speakersCategory = document.querySelector("#speakers-category") ;
 let smartWatchesCategory = document.querySelector("#smartWatch-category") ;
@@ -259,10 +220,8 @@ airpodsCategory.addEventListener("click", ()=>{
 })
 
 
-let headphoneListDiv = document.querySelector(".headphone-list") ;
-let smartWatchListDiv = document.querySelector(".smartWatch-list") ;
-// let smartWatchesListDiv = document.querySelector(".smart-watches-list") ;
-// let earbudsCategory = document.querySelector("#earbuds-category") ;
+let bluetoothSpeakersListDiv = document.querySelector(".bluetooth-speakers-list") ;
+
 
 function appendProductsToDOM(productList, appendingDiv) {
     console.log(productList);

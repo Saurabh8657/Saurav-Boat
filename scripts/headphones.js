@@ -1,6 +1,6 @@
 //------------ URL'S ---------------//
 
-let baseURL = "https://zany-seal-pantsuit.cyclic.app/" ;
+let baseURL = "https://boat-mock-server.onrender.com" ;
 let headphonesURL = `${baseURL}/headphones`;
 let airpodsURL = `${baseURL}/airpods`;
 let bluetoothSpeakersURL = `${baseURL}/bluetoothSpeaker`;
@@ -9,13 +9,12 @@ let userURL = `${baseURL}/users`;
 
 
 let headphoneList ;
-// let airpodsList ;
-// let bluetoothSpeakerList ;
-// let smartWatcheList ;
 
 let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
 let loggedInUserCart = JSON.parse(localStorage.getItem("cart")) || null ;
-
+if(loggedInUser){
+    fetchCartOfLoggedInUser()
+}
 
 //------------ essentials fetching  ---------------//
 async function fetchProductsHeadphones() {
@@ -31,68 +30,28 @@ async function fetchProductsHeadphones() {
         console.log(error);
     }
 }
-// async function fetchProductsAirpods() {
-//     try{
-//         let res = await fetch(`${airpodsURL}`);
-//         let data = await res.json();
-//         console.log("Airpods",data);
-//         airpodsList = data;
-//         // localStorage.setItem("airpods", JSON.stringify(data));
-//     }catch(error){
-//         console.log(error);
-//     }
-// }
-// async function fetchProductsBlutoothSpeakers() {
-//     try{
-//         let res = await fetch(`${bluetoothSpeakersURL}`);
-//         let data = await res.json();
-//         console.log("BlutoothSpeakers",data);
-//         bluetoothSpeakerList = data;
-//         // localStorage.setItem("bluetoothSpeaker", JSON.stringify(data));
-//     }catch(error){
-//         console.log(error);
-//     }
-// }
-// async function fetchProductsSmartWatches() {
-//     try{
-//         let res = await fetch(`${smartWatchURL}`);
-//         let data = await res.json();
-//         console.log("SmartWatches",data);
-//         smartWatcheList = data;
-//         console.log(smartWatcheList);
-//         smartWatchListDiv.innerHTML = "";
-//         appendProductsToDOM( smartWatcheList, smartWatchListDiv );
-//         // localStorage.setItem("neckband", JSON.stringify(data));
-//     }catch(error){
-//         console.log(error);
-//     }
-// }
 fetchProductsHeadphones();
-// fetchProductsAirpods();
-// fetchProductsBlutoothSpeakers();
-// fetchProductsSmartWatches();
 
-// async function fetchCartOfLoggedInUser() {
-//     try {
-//         let res = await fetch(`${baseURL}/carts`);
-//         let data = await res.json();
-//         console.log("Carts",data);
-//         for (const cart of data) {
-//             if (cart.userId === loggedInUser.id) {
-//                 localStorage.setItem("cart", JSON.stringify(cart));
-//                 break;
-//             }
-//         }
-//     } catch(error) {
-//         console.log(error);
-//     }
-// }
-// if(loggedInUser){
-//     fetchCartOfLoggedInUser();
-// }
+async function fetchCartOfLoggedInUser() {
+    try {
+        let res = await fetch(`${baseURL}/carts`);
+        let data = await res.json();
+        console.log("Carts",data);
+        for (const cart of data) {
+            if (cart.userId === loggedInUser.id) {
+                loggedInUserCart = cart ;
+                localStorage.setItem("cart", JSON.stringify(cart));
+                break;
+            }
+        }
+    } catch(error) {
+        console.log(error);
+    }
+}
 
 
 //----------- for showing logged in user  -----------//
+//----------- for redirecting to profile and admin  -----------//
 let signinBtn = document.querySelector(".navbar-signin-btn") ;
 if(loggedInUser){
     signinBtn.innerText = `Hi ${loggedInUser.firstName}`
@@ -262,9 +221,6 @@ airpodsCategory.addEventListener("click", ()=>{
 
 
 let headphoneListDiv = document.querySelector(".headphone-list") ;
-// let smartWatchListDiv = document.querySelector(".smartWatch-list") ;
-// let smartWatchesListDiv = document.querySelector(".smart-watches-list") ;
-// let earbudsCategory = document.querySelector("#earbuds-category") ;
 
 function appendProductsToDOM(productList, appendingDiv) {
     console.log(productList);
@@ -273,8 +229,6 @@ function appendProductsToDOM(productList, appendingDiv) {
         appendingDiv.append(card);
     });
 }
-
-
 
 function createProdudctCard(item,index){
     let card = document.createElement("div");

@@ -6,12 +6,20 @@
 // cartIcon.addEventListener( "click", ()=>{
 //     window.location.href = "cart.html"
 // })
+let paramString = urlString.split('?')[1];
+let params_arr = paramString.split('&');
+for (let i = 0; i < params_arr.length; i++) {
+   let pair = params_arr[i].split('=');
+   console.log("Key is:", pair[0]);
+   console.log("Value is:", pair[1]);
+}
 
-const baseURL = "http://localhost:1337" ;
-const productsURL = "http://localhost:1337/api/products?populate=*" ;
-const categoriesURL = "http://localhost:1337/api/categories?populate=*" ;
-
-const jwt = "af6db04bba1cf248596a9faa0a9ac08f21b3bef071aaf6e7084fe9b81b3cb9614b713239fe05d4f0ccfdd8439d237c0ad3a89a475aa78d4aed86d8cb999af55039b83711194792f57a3d23a2bddea04ef9a03b8178045cc83de3ef097da509c2ec3ba2cabf4eb9c297db224c3e7244732843bb2952b053d8f8f68aeb26830948"
+let baseURL = "https://boat-mock-server.onrender.com" ;
+let headphonesURL = `${baseURL}/headphones`;
+let airpodsURL = `${baseURL}/airpods`;
+let bluetoothSpeakersURL = `${baseURL}/bluetoothSpeaker`;
+let smartWatchURL = `${baseURL}/smartWatches`;
+let userURL = `${baseURL}/users`;
 
 async function fetchData(url,query=""){
     try{

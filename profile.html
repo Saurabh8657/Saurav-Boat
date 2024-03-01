@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/e41a797fac.js" crossorigin="anonymous"></script>
+    <!----- for login modal ----->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> -->
+
+    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet" href="/styles/profile.css">
+    <title>Boat Lifestyle</title>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <ul class="left">
+                <li><a href="index.html"> <i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#categories" id="navbar-categories-btn" >Categories</a></li>
+                <li><span class="navbar-signin-btn" > signin/signup</span>   </li>
+            </ul>
+            <div class="center">BOAT_LIFESTYLE.</div>
+            <div class="right">
+                
+                <i class="fa-solid fa-magnifying-glass" id="navbar-search" ></i>
+                <i class="fa-regular fa-heart"></i>
+                <i class="fa-solid fa-cart-shopping cart-icon" id="navbar-cart-icon">
+                    <span>5</span>
+                </i>
+            </div>
+        </div>
+    </header>
+
+    <!---------- for cart ---------->
+    <div class="cart-panel">
+        <div class="opac-layer">
+            <span><i fass="fa-solid fa-xmark"></i></span>
+        </div>
+        <div class="cart-content">
+            <div class="cart-header">
+                <!-- <span class="close-btn"><i class="fa-solid fa-xmark"></i>Close</span> -->
+                <span class="heading">Your Cart</span>
+            </div>
+            <!-- ////shorld visible on empty cart -->
+            <div class="empty-cart">
+                <i class="fa-solid fa-cart-shopping cart-icon"></i>
+                <span class="heading">Your cart is empty</span>
+                <button class="return-home" > Return to home</button>
+            </div>
+
+
+            <div class="cart-products">
+                <div class="cart-product-list">
+                    <div class="img-container">
+                        <img src="/img/products/headphone-prod-1.webp" alt="">
+                    </div>
+                    <div class="prod-details">
+                        <div class="name">Product Name</div>
+                        <i class="fa-solid fa-xmark"></i>
+                        <div class="quantity-buttons">
+                            <span>-</span>
+                            <span>5</span>
+                            <span>+</span>
+                        </div>
+                        <div class="text">
+                            <span>3</span>
+                            <span>x</span>
+                            <span class="higlight" >&#8377;8000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-footer">
+                <div class="subtotal">
+                    <span class="text">SubTotal</span>
+                    <span class="text total">&#8377;8000</span>
+                </div>
+                <div class="cart-cupon">
+                    <input type="text" class="input-cupon" placeholder="got any cupons" id="input-cupon" >
+                    <button class="apply-cupon-btn">Apply</button>
+                </div>
+                <div class="button">
+                    <button class="checkout-btn">CheckOut</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Top Bar -->
+    <div class="head">
+        <div class="totalBalance">
+            <div class="user-details">
+                <div class="profile">
+                    <img id="profile-picture" src="../assets/user/user.png" alt="user" />
+                </div>
+
+                <p id="welcome">Hello! <span id="user-name"></span><br> Welcome to <span>Digital Pay.</span></p>
+            </div>
+
+            <!-- <div class="send-button">
+                <i class="fa-solid fa-paper-plane"></i>
+                <a href="./payPage/pay.html">Send</a>
+            </div> -->
+
+            <div class="total-balance">
+                <p class="total-balance-text" id="digi">Total Balance</p>
+                <h2 class="total-balance-amount"></h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="newsletter-section">
+        <div class="newsletter-content">
+            <span class="small-text"> Newsletter</span>
+            <span class="big-text">Sign up for latest updates and offers</span>
+            <div class="form">
+                <input type="text" placeholder="Email Address" id="email-Address-input" >
+                <button>Subscribe</button>
+            </div>
+            <div class="text">Will be used in accoradance with out Privacy Policy</div>
+            <div class="social-icons">
+                <div class="icon"> <i class="fa-brands fa-facebook"> </i> </div>
+                <div class="icon"> <i class="fa-brands fa-instagram"></i> </div>
+                <div class="icon"> <i class="fa-brands fa-twitter"></i> </div>
+                <div class="icon"> <i class="fa-brands fa-linkedin"></i> </div> 
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-content">
+        <div class="col">
+            <div class="title">About</div>
+            <div class="text">
+                Welcome to our online store, where style meets convenience! Discover a curated collection of trendy fashion, electronics, and lifestyle essentials. Browse through our user-friendly platform, explore exclusive deals, and enjoy hassle-free shopping with secure payments. Elevate your shopping experience with us today!
+            </div>
+        </div>
+        <div class="col">
+            <div class="title">Contact</div>
+            <div class="c-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <div class="text">
+                    123 Shopper's Street,
+                    Cityville, State 12345,
+                    Country Centralia.
+                </div>
+            </div>
+            <div class="c-item">
+                <i class="fa-solid fa-phone"></i>
+                <div class="text">
+                    Phone: +1 (555) 123-4567
+                </div>
+            </div>
+            <div class="c-item">
+                <i class="fa-solid fa-envelope"></i>
+                <div class="text">
+                    Email: support@yourstore.com
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="title">Categories</div>
+            
+            <div class="text">Headphones</div>
+            <div class="text">Smart Watches</div>
+            <div class="text">Bluetooth Speakers</div>
+            <div class="text">Wireless Earbuds</div>
+            <div class="text">Home Theaters</div>
+            <div class="text">Projectors</div>
+        </div>
+        <div class="col">
+            <div class="title">Pages</div>
+            <div class="text">Home</div>
+            <div class="text">About</div>
+            <div class="text">Privacy Policy</div>
+            <div class="text">Returns</div>
+            <div class="text">Terms Conditions</div>
+            <div class="text">Contact Us</div>
+        </div>
+    </footer>
+
+    <script src="/scripts/profile.js"></script>
+    
+</body>
+</html>

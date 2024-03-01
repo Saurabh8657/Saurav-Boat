@@ -12,18 +12,17 @@ loginBtn.addEventListener('click', () => {
 });
 //------------------ login modal   --------------//
 
-
-let baseURL = "https://zany-seal-pantsuit.cyclic.app/" ;
+let baseURL = "https://boat-mock-server.onrender.com" ;
 let userURL = `${baseURL}/users`;
 
-let userData;
+let usersList;
 
 async function fetchUsers() {
   try {
     let res = await fetch(`${userURL}`);
     let data = await res.json();
     console.log(data);
-    userData = data;
+    usersList = data;
   } catch (error) {
     console.log(error);
   }
@@ -40,7 +39,7 @@ let siginBtn = document.getElementById("loginbtnSign");
 siginBtn.addEventListener("click", (e) => {
   e.preventDefault();
   console.log("hi");
-  if (checkUsers(userData)) {
+  if (checkUsers(usersList)) {
     toastIntoAction("Login Successful", "success");
     setTimeout(() => {
       window.location.href = "index.html";
@@ -50,17 +49,17 @@ siginBtn.addEventListener("click", (e) => {
     toastIntoAction("User doesnot exist or Invalid Credentials", "alert");
   }
 });
-function checkUsers(userData) {
+function checkUsers(usersList) {
   let obj = {
     email: loginemailInput.value,
     password: loginpasswordInput.value,
   };
-  for (let i = 0; i < userData.length; i++) {
+  for (let i = 0; i < usersList.length; i++) {
     if (
-      userData[i].email == obj.email  &&
-      userData[i].password == obj.password
+      usersList[i].email == obj.email  &&
+      usersList[i].password == obj.password
     ) {
-      putUsersIntoLocal(userData[i]);
+      putUsersIntoLocal(usersList[i]);
       return true;
     }
   }
@@ -127,21 +126,19 @@ async function addCartForUser(){
       })
       let data = await response.json();
       console.log(data);
-      // fetchUsers() ;
-      // addCartForUser() ;
   }
   catch(error){
       console.log(error);
   }
 }
 
-function checkExistingUsers(data) {
+function checkExistingUsers(usersList) {
   let obj = {
     email: signupEmailInput.value,
     phone: signupPhoneInput.value,
   };
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].email == obj.email || data[i].phone == obj.phone) {
+  for (let i = 0; i < usersList.length; i++) {
+    if (usersList[i].email == obj.email || usersList[i].phone == obj.phone) {
       return true;
     }
   }
@@ -172,7 +169,7 @@ signupBtn.addEventListener("click", (e) => {
     toastIntoAction("Password should contain 1 special character one number and one uppercase letter and atleast 8 characters", "alert");
     return;
   }
-  if (checkExistingUsers(userData)) {
+  if (checkExistingUsers(usersList)) {
     toastIntoAction(
       "Account Already Exists with this Email or Phone Number. Please SignIn!", "alert"
     );
