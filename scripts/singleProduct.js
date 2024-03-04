@@ -1,18 +1,4 @@
-// let cartIcon = document.querySelector(".cart-icon") ;
-// let opacLayer = document.querySelector(".opac-layer") ;
-// let cartContent = document.querySelector(".cart-content") ;
 
-// cartIcon.style.color = "red" ; 
-// cartIcon.addEventListener( "click", ()=>{
-//     window.location.href = "cart.html"
-// })
-let paramString = urlString.split('?')[1];
-let params_arr = paramString.split('&');
-for (let i = 0; i < params_arr.length; i++) {
-   let pair = params_arr[i].split('=');
-   console.log("Key is:", pair[0]);
-   console.log("Value is:", pair[1]);
-}
 
 let baseURL = "https://boat-mock-server.onrender.com" ;
 let headphonesURL = `${baseURL}/headphones`;
@@ -21,124 +7,179 @@ let bluetoothSpeakersURL = `${baseURL}/bluetoothSpeaker`;
 let smartWatchURL = `${baseURL}/smartWatches`;
 let userURL = `${baseURL}/users`;
 
-async function fetchData(url,query=""){
+let singleProduct = JSON.parse(localStorage.getItem("clickedProduct"))
+let relatedProductList  ;
+displaySingleProduct(singleProduct)
+
+function displaySingleProduct(data){
+    console.log(data)
+    let singleProductImg = document.getElementById("single-product-img");
+    let singleProductName = document.getElementById("single-product-name");
+    let singleProductPrice = document.getElementById("single-product-price");
+    let singleProductDesc = document.getElementById("single-product-desc");
+    singleProductImg.src = data.image 
+    singleProductName.innerText = data.productName
+    singleProductPrice.innerText = data.price
+    singleProductDesc.innerText = data.description
+
+    let quantityIncreaseBtn = document.getElementById("quantity-decrease-button");
+    let quantityValue = document.getElementById("quantity-value");
+    let quantityDecreaseBtn = document.getElementById("quantity-increase-button");
+}
+//------------ essentials fetching  ---------------//
+async function fetchRelatedProducts() {
     try{
-        let res = await fetch(`${url}${query}`,{
-            method: "GET",
-            headers:{
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${jwt}`
-            }
-        }) ;
-        let data = await res.json() ;
-        console.log(data.data) ;
-        if(url===productsURL){
-            displayProducts(data.data) ;
-        }else if(url===categoriesURL){
-            displayCategories(data.data) ;
-        }
+        let category =  singleProduct.category ;
+        let res = await fetch(`${baseURL}/${category}`);
+        let data = await res.json();
+        console.log(data);
+        relatedProductList = data;
+        relatedProductListDiv.innerHTML = "";
+        appendProductsToDOM( relatedProductList, relatedProductListDiv );
     }catch(error){
-        console.log(error) ;
+        console.log(error);
     }
-    
 }
-
-
-////// for categories
-let categoriesList = document.querySelector(".categories") ;
-fetchData(categoriesURL,"") ;
-
-function displayCategories(data){
-    categoriesList.innerHTML="";
-    data.forEach( (item,index) => {
-        let card = createCategoryCard(item,index) ;
-        categoriesList.append(card) ;
+fetchRelatedProducts() ;
+let relatedProductListDiv = document.querySelector(".related-products-list") ;
+function appendProductsToDOM(productList, appendingDiv) {
+    console.log(productList);
+    productList?.forEach( (item,index) => {
+        let card = createProdudctCard(item,index);
+        card.addEventListener("click", ()=>{
+            localStorage.setItem("clickedProduct",JSON.stringify(item));
+            window.location.href = "singleProduct.html";
+        })
+        appendingDiv.append(card);
     });
 }
-function createCategoryCard(item,index){
-    let cardImg = document.createElement("div") ;
-    cardImg.classList.add("category") ;
 
-    cardImg.addEventListener("click", ()=>{
-        if(item.attributes.title==="Smart Watches"){
-            window.location.href = "smart_watch.html";
-        }
-        if(item.attributes.title==="Headphones"){
-            window.location.href = "headphones.html";
-        }
-        if(item.attributes.title==="Bluetooth Speakers"){
-            window.location.href = "blutooth_speakers.html";
-        }
-        if(item.attributes.title==="Wireless Earbuds"){
-            window.location.href = "airpods.html";
-        }
-    })
+function createProdudctCard(item,index){
+    let card = document.createElement("div");
+    card.className = "product-card";
 
-    let img = document.createElement("img") ;
-    // console.log(item.attributes.img.data.attributes.url)
-    img.src = `${baseURL}${item.attributes.img.data.attributes.url}`
-    cardImg.append(img) ;
-    return cardImg ;
-}
+    let thumbnail = document.createElement("div");
+    thumbnail.className = "thumbnail";
+    let cardImg = document.createElement("img");
+    cardImg.src = `${item.image}`;
+    cardImg.alt = "Product Image";
 
+    let productDetails = document.createElement("div");
+    productDetails.className = "product-details";
+    let name = document.createElement("div");
+    name.className = "name";
+    name.innerText = `${item.productName}`;
 
-////// for products
-let airpodsList = document.querySelector(".airpods-list") ;
-// let headphoneList = document.querySelector(".headphone-list") ;
-// let smartWatchesList = document.querySelector(".smart-watches-list") ;
-// let blutoothSpeakersList = document.querySelector(".blutooth-speakers-list") ;
+    let price = document.createElement("div");
+    price.className = "price";
+    price.innerText = `${item.price}`;
 
-fetchData(productsURL,"") ;
+    thumbnail.append(cardImg);
+    productDetails.append(name,price);
 
-function displayProducts(data){
-    airpodsList.innerHTML="";
-    // headphoneList.innerHTML="";
-    // smartWatchesList.innerHTML="";
-    // blutoothSpeakersList.innerHTML="";
-    data.forEach( (item,index) => {
-        
-        // if(item.attributes.categories.data[0].attributes.title=="Smart Watches"){
-        //     smartWatchesList.append(card) ;
-        // }
-        // if(item.attributes.categories.data[0].attributes.title=="Headphones"){
-        //     headphoneList.append(card) ;
-        // }
-        if(item.attributes.categories.data[0].attributes.title=="Wireless Earbuds"){
-            let card = createProductsCard(item,index) ;
-            airpodsList.append(card) ;
-        }
-        // if(item.attributes.categories.data[0].attributes.title=="Bluetooth Speakers"){
-        //     blutoothSpeakersList.append(card) ;
-        // }
-    });
-}
-function createProductsCard(item,index){
-    let card = document.createElement("div") ;
-    card.classList.add("product-card") ;
-
-    let cardImg = document.createElement("div") ;
-    cardImg.classList.add("thumbnail") ;
-
-    let img = document.createElement("img") ;
-    console.log(item.attributes.img.data[0].attributes.url)
-    img.src = `${baseURL}${item.attributes.img.data[0].attributes.url}`
-    cardImg.append(img) ;
-
-
-    let cardDetails = document.createElement("div") ;
-    cardDetails.classList.add("product-details") ;
-
-    let title = document.createElement("div") ;
-    title.classList.add("name") ;
-    title.innerText = `${item.attributes.title}` ;
-
-    let price = document.createElement("div") ;
-    price.classList.add("price") ;
-    price.innerText = `${item.attributes.price}` ;
-
-    cardDetails.append(title,price) ;
-
-    card.append(cardImg,cardDetails) ;
-
+    card.append(thumbnail,productDetails);
     return card ;
 }
+
+//----------- for debouncing realtime searach  ----------//
+let searchAirpodsList ;
+async function fetchAirpodsForSearch(url,query="") {
+    try{
+        let res = await fetch(`${url}${query}`);
+        let data = await res.json();
+        console.log("Airpods",data);
+        searchAirpodsList = data;
+        searchResultListDiv.innerHTML = "";
+        appendProductsToSearchDOM( searchAirpodsList, searchResultListDiv) ;
+    }catch(error){
+        console.log(error);
+    }
+}
+let searchInput =  document.querySelector(".search-input") ;
+searchInput.addEventListener("input",()=>{
+    storedDebounceFunc()
+} ) ;
+function searchDebounce( fetchfun,delay){
+    let categoryToFetch ;
+    if(singleProduct.category==="airpods"){
+        categoryToFetch = airpodsURL ;
+    }else if(singleProduct.category==="headphones"){
+        categoryToFetch = headphonesURL ;
+    }else if(singleProduct.category==="bluetoothSpeaker"){
+        categoryToFetch = bluetoothSpeakersURL ;
+    }else if(singleProduct.category==="smartWatches"){
+        categoryToFetch = smartWatchURL ;
+    }
+    let timer ;
+    return function(){
+        if(timer){
+            clearTimeout(timer) ;
+        }
+        timer = setTimeout( ()=>{ 
+            
+            fetchfun(`${categoryToFetch}?productName_like=${searchInput.value}`) 
+        },delay )  ;
+    }
+}
+let storedDebounceFunc = searchDebounce(fetchAirpodsForSearch,500) ;
+
+let searchResultListDiv = document.querySelector(".search-result-list") ;
+function appendProductsToSearchDOM(productList, appendingDiv) {
+    // console.log(productList);
+    productList?.forEach( (item,index) => {
+        let card = createProdudctSearchCard(item,index);
+        card.addEventListener("click", ()=>{
+            localStorage.setItem("clickedProduct",JSON.stringify(item));
+            window.location.href = "singleProduct.html";
+        })
+        appendingDiv.append(card);
+    });
+}
+
+function createProdudctSearchCard(item,index){
+    let card = document.createElement("div");
+    card.className = "search-result-card";
+
+    let thumbnail = document.createElement("div");
+    thumbnail.className = "image-container";
+    let cardImg = document.createElement("img");
+    cardImg.src = `${item.image}`;
+    cardImg.alt = "Product Image";
+
+    let productDetails = document.createElement("div");
+    productDetails.className = "product-details";
+    let name = document.createElement("div");
+    name.className = "name";
+    name.innerText = `${item.productName}`;
+
+    let description = document.createElement("div");
+    description.className = "description";
+    description.innerText = `${item.description}`;
+
+    thumbnail.append(cardImg);
+    productDetails.append(name,description);
+
+    card.append(thumbnail,productDetails);
+    return card ;
+}
+//----------- for debouncing realtime searach  ----------//
+
+//--------------- for showing navbar search --------------//
+
+let searchResultContent =  document.querySelector(".search-result-content") ;
+let searchIcon = document.querySelector("#navbar-search") ;
+let searchResultClose = document.querySelector(".search-result-close") ;
+searchIcon.addEventListener( "click", ()=>{
+    searchResultContent.classList.remove("hide") 
+})
+searchResultClose.addEventListener( "click", ()=>{
+    searchResultContent.classList.add("hide")
+})
+
+//------------- for redirecting to payment page  -----------------//
+let checkoutBtn = document.querySelector(".checkout-btn") ;
+checkoutBtn.addEventListener( "click", ()=>{
+    window.location.href = "payment.html" ;
+})
+
+

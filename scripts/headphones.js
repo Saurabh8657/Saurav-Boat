@@ -77,108 +77,88 @@ cartIcon.addEventListener( "click", ()=>{
     cartPanel.classList.add("show-cart") 
 }) 
 
-//--------------- for navbar search --------------//
-let searchIcon = document.querySelector("#navbar-search") ;
-searchIcon.addEventListener( "click", ()=>{
-    // Create search result content container
-    let searchResultContent =  document.querySelector(".search-result-content") ;
-    // searchResultContent.className = "search-result-content";
-
-    // Create search input element
-    let searchInput = document.createElement("input");
-    searchInput.type = "text";
-    searchInput.className = "search-input";
-    searchInput.placeholder = "Search any category";
-    searchInput.id = "search-input";
-    searchInput.addEventListener("change", ()=>{
-        let searchInputValue = searchInput.value ;
-        console.log(searchInputValue) ;
-
-        // Create search result list container
-        let searchResultList = document.createElement("div");
-        searchResultList.className = "search-result-list";
-
-        // Create first search result card
-        let searchResultCard1 = createSearchResultCard("Product Name 1", "Product desc 1", "/img/products/earbuds-prod-3.webp");
-
-        // Create second search result card
-        let searchResultCard2 = createSearchResultCard("Product Name 2", "Product desc 2", "/img/products/earbuds-prod-3.webp");
-
-        // Append search result cards to the result list
-        searchResultList.appendChild(searchResultCard1);
-        searchResultList.appendChild(searchResultCard2);
-
-        searchResultContent.appendChild(searchResultList);
-    })
-
-    // Create search heading div
-    let searchHeadingDiv = document.createElement("div");
-    searchHeadingDiv.className = "search-heading-div";
-    
-    // Create search result heading
-    let searchResultHeading = document.createElement("span");
-    searchResultHeading.className = "search-result-heading";
-    searchResultHeading.textContent = "Search Results";
-
-    // Create search result close icon
-    let searchResultClose = document.createElement("span");
-    searchResultClose.className = "search-result-close";
-    let closeIcon = document.createElement("i");
-    closeIcon.className = "fa-solid fa-xmark";
-    searchResultClose.appendChild(closeIcon);
-
-    // Append heading and close icon to heading div
-    searchHeadingDiv.appendChild(searchResultHeading);
-    searchHeadingDiv.appendChild(searchResultClose);
-
-    // Append search input, heading div, and result list to the main content container
-    searchResultContent.appendChild(searchInput);
-    searchResultContent.appendChild(searchHeadingDiv);
-    
-
-    // Append the dynamically created elements to the body
-    // document.body.appendChild(searchResultContent);
-
-    // Function to create a search result card
-    function createSearchResultCard(name, description, imagePath) {
-        let searchResultCard = document.createElement("div");
-        searchResultCard.className = "search-result-card";
-
-        // Create image container
-        let imageContainer = document.createElement("div");
-        imageContainer.className = "image-container";
-
-        // Create image element
-        let image = document.createElement("img");
-        image.src = imagePath;
-
-        // Append image to the image container
-        imageContainer.appendChild(image);
-
-        // Create product details container
-        let productDetails = document.createElement("div");
-        productDetails.className = "product-detalis";
-
-        // Create name and description elements
-        let nameElement = document.createElement("div");
-        nameElement.className = "name";
-        nameElement.textContent = name;
-
-        let descriptionElement = document.createElement("div");
-        descriptionElement.className = "description";
-        descriptionElement.textContent = description;
-
-        // Append name and description to product details
-        productDetails.appendChild(nameElement);
-        productDetails.appendChild(descriptionElement);
-
-        // Append image container and product details to the search result card
-        searchResultCard.appendChild(imageContainer);
-        searchResultCard.appendChild(productDetails);
-
-        return searchResultCard;
+//----------- for debouncing realtime searach  ----------//
+let searchAirpodsList ;
+async function fetchAirpodsForSearch(url,query="") {
+    try{
+        let res = await fetch(`${url}${query}`);
+        let data = await res.json();
+        console.log("Airpods",data);
+        searchAirpodsList = data;
+        searchResultListDiv.innerHTML = "";
+        appendProductsToSearchDOM( searchAirpodsList, searchResultListDiv) ;
+    }catch(error){
+        console.log(error);
     }
+}
+let searchInput =  document.querySelector(".search-input") ;
+searchInput.addEventListener("input",()=>{
+    storedDebounceFunc()
+} ) ;
+function searchDebounce( fetchfun,delay){
+    let timer ;
+    return function(){
+        if(timer){
+            clearTimeout(timer) ;
+        }
+        timer = setTimeout( ()=>{ 
+            fetchfun(`${headphonesURL}?productName_like=${searchInput.value}`) 
+        },delay )  ;
+    }
+}
+let storedDebounceFunc = searchDebounce(fetchAirpodsForSearch,500) ;
 
+let searchResultListDiv = document.querySelector(".search-result-list") ;
+function appendProductsToSearchDOM(productList, appendingDiv) {
+    // console.log(productList);
+    productList?.forEach( (item,index) => {
+        let card = createProdudctSearchCard(item,index);
+        card.addEventListener("click", ()=>{
+            localStorage.setItem("clickedProduct",JSON.stringify(item));
+            window.location.href = "singleProduct.html";
+        })
+        appendingDiv.append(card);
+    });
+}
+
+function createProdudctSearchCard(item,index){
+    let card = document.createElement("div");
+    card.className = "search-result-card";
+
+    let thumbnail = document.createElement("div");
+    thumbnail.className = "image-container";
+    let cardImg = document.createElement("img");
+    cardImg.src = `${item.image}`;
+    cardImg.alt = "Product Image";
+
+    let productDetails = document.createElement("div");
+    productDetails.className = "product-details";
+    let name = document.createElement("div");
+    name.className = "name";
+    name.innerText = `${item.productName}`;
+
+    let description = document.createElement("div");
+    description.className = "description";
+    description.innerText = `${item.description}`;
+
+    thumbnail.append(cardImg);
+    productDetails.append(name,description);
+
+    card.append(thumbnail,productDetails);
+    return card ;
+}
+//----------- for debouncing realtime searach  ----------//
+
+//--------------- for showing navbar search --------------//
+
+let searchResultContent =  document.querySelector(".search-result-content") ;
+let searchIcon = document.querySelector("#navbar-search") ;
+let searchResultClose = document.querySelector(".search-result-close") ;
+searchIcon.addEventListener( "click", ()=>{
+    searchResultContent.classList.remove("hide") 
+})
+searchResultClose.addEventListener( "click", ()=>{
+    searchResultContent.classList.add("hide")
 })
 
 //------------- for redirecting to payment page  -----------------//
@@ -226,6 +206,10 @@ function appendProductsToDOM(productList, appendingDiv) {
     console.log(productList);
     productList?.forEach( (item,index) => {
         let card = createProdudctCard(item,index);
+        card.addEventListener("click", ()=>{
+            localStorage.setItem("clickedProduct",JSON.stringify(item));
+            window.location.href = "singleProduct.html";
+        })
         appendingDiv.append(card);
     });
 }

@@ -14,7 +14,7 @@
             <ul class="left">
                 <li><a href="index.html"> <i class="fa-solid fa-house"></i> Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="" id="navbar-categories" >Categories</a></li>
+                <li><a href="#categories" id="navbar-categories-btn" >Categories</a></li>
                 <li><span class="navbar-signin-btn" > signin/signup</span>   </li>
             </ul>
             <div class="center">BOAT_LIFESTYLE.</div>
@@ -28,8 +28,8 @@
             </div>
         </div>
     </header>
-     <!-- ////////  for search result will show on search click -->
-    <div class="search-result-content">
+     <!---------  for search result will show on search click ------>
+     <div class="search-result-content hide">
         <input type="text" class="search-input" placeholder="search any category">
         <div class="search-heading-div">
             <span class="search-result-heading">Search Results</span> 
@@ -57,8 +57,8 @@
             </div>
         </div>
     </div>
-    <!---------- for cart ---------->
-    <div class="cart-panel">
+     <!---------- for cart ---------->
+     <div class="cart-panel">
         <div class="opac-layer">
             <span><i fass="fa-solid fa-xmark"></i></span>
         </div>
@@ -118,17 +118,17 @@
         <div class="layout">
             <div class="single-product-page">
                 <div class="left">
-                    <img src="../img/products/watch-prod-2.webp" alt="">
+                    <img src="../img/products/watch-prod-2.webp" alt="" id="single-product-img">
                 </div>
                 <div class="right">
-                    <span class="name">Product Name</span>
-                    <span class="price">Price</span>
-                    <span class="desc">Product Description</span>
+                    <span class="name" id="single-product-name">Product Name</span>
+                    <span class="price" id="single-product-price">Price</span>
+                    <span class="desc" id="single-product-desc">Product Description</span>
                     <div class="cart-buttons">
                         <div class="quantity-buttons">
-                            <span>-</span>
-                            <span>5</span>
-                            <span>+</span>
+                            <span id="quantity-decrease-button">-</span>
+                            <span id="quantity-value">5</span>
+                            <span id="quantity-increase-button">+</span>
                         </div>
                         <button class="add-to-cart-button">
                             <i class="fa-solid fa-cart-shopping cart-icon"></i>
@@ -141,7 +141,7 @@
                     <div class="info-item">
                         <span class="text-bold">
                             Category : 
-                            <span>Smart Watches</span>
+                            <span id="category">Smart Watches</span>
                         </span>
                         <span class="text-bold">
                             Share : 
@@ -160,7 +160,7 @@
             <div class="related-products">
                 <div class="products-container">
                     <div class="sec-heading"> Section Heading </div>
-                    <div class="products">
+                    <div class="products related-products-list">
                         <div class="product-card" >
                             <div class="thumbnail">
                                 <img src="../img/products/earbuds-prod-1.png" alt="">

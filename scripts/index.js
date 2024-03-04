@@ -276,6 +276,10 @@ function appendProductsToDOM(productList, appendingDiv) {
     console.log(productList);
     productList?.forEach( (item,index) => {
         let card = createProdudctCard(item,index);
+        card.addEventListener("click", ()=>{
+            localStorage.setItem("clickedProduct",JSON.stringify(item));
+            window.location.href = "singleProduct.html";
+        })
         appendingDiv.append(card);
     });
 }
