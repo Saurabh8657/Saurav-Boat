@@ -183,8 +183,11 @@
   }
 }
 .login-container .container .card-options .card img {
-  width: 100%;
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 80%;
 }
 .login-container .container .submit-details {
   margin: 0 auto;
