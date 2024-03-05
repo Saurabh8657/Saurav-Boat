@@ -284,3 +284,19 @@ function createProdudctCardInCart(item,index){
 
 }
 
+//--- logout button ---//
+if(loggedInUser){
+    let navbarButtonsDiv = document.querySelector(".left")
+    let logoutBtn = document.createElement("li");
+    logoutBtn.innerText = "LOGOUT"
+
+    navbarButtonsDiv.append(logoutBtn);
+
+    logoutBtn.addEventListener("click", ()=>{
+        localStorage.removeItem("user");
+        localStorage.removeItem("cart");
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1500);
+    })
+}
