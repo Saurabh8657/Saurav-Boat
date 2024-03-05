@@ -161,6 +161,10 @@
   padding: 0 10px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 5px;
+  cursor: pointer;
+}
+.parent-container .container .cart-div .cart-products-list-div .product-card i {
+  cursor: pointer;
 }
 .parent-container .container .summary-div {
   border-radius: 20px 20px 20px 20px;

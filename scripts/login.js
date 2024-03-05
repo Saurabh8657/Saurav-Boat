@@ -40,6 +40,7 @@ siginBtn.addEventListener("click", (e) => {
   e.preventDefault();
   console.log("hi");
   if (checkUsers(usersList)) {
+    fetchCartOfLoggedInUser();
     toastIntoAction("Login Successful", "success");
     setTimeout(() => {
       window.location.href = "index.html";
@@ -68,6 +69,22 @@ function checkUsers(usersList) {
 
 function putUsersIntoLocal(user) {
   localStorage.setItem("user", JSON.stringify(user));
+}
+async function fetchCartOfLoggedInUser() {
+  let loggedInUser = JSON.parse(localStorage.getItem("user"));
+  try {
+      let res = await fetch(`${baseURL}/carts`);
+      let data = await res.json();
+      console.log("Carts",data);
+      for (const cart of data) {
+          if (cart.userId === loggedInUser.id) {
+              localStorage.setItem("cart", JSON.stringify(cart));
+              break;
+          }
+      }
+  } catch(error) {
+      console.log(error);
+  }
 }
 
 /// Toast

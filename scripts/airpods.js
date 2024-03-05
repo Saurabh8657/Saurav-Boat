@@ -7,13 +7,18 @@ let bluetoothSpeakersURL = `${baseURL}/bluetoothSpeaker`;
 let smartWatchURL = `${baseURL}/smartWatches`;
 let userURL = `${baseURL}/users`;
 
+let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
+let cartCount = document.querySelector("#cart-count");
+if(loggedInUser){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cartCount.innerText = cart.products.length;
+}
 
 let headphoneList ;
 let airpodsList ;
 let bluetoothSpeakerList ;
 let smartWatcheList ;
 
-let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
 
 //------------ essentials fetching  ---------------//
 async function fetchProductsAirpods() {
@@ -126,11 +131,13 @@ signinBtn.addEventListener("click", ()=>{
         window.location.href = "login.html";
     }else if (signinBtn.innerText === "Admin"){
         window.location.href = "admin.html";
-    }else{
-        window.location.href = "profile.html";
     }
 })
-
+//------------- for cart modal  -----------------//
+let cartIcon = document.querySelector("#navbar-cart-icon") ;
+cartIcon.addEventListener( "click", ()=>{
+    window.location.href = "cart.html";
+}) 
 
 //------------- for banner crausal -----------------//
 // const bannerImgArray =["../img/banner-img.png","../img/banner-img.png","../img/banner-image-3.webp","../img/banner-image-5.webp","../img/banner-image-7.webp","../img/products/earbuds-prod-3.webp","../img/products/speaker-prod-1.webp","../img/products/headphone-prod-3.webp","../img/products/watch-prod-2.webp","../img/products/earbuds-prod-4.webp","../img/products/earbuds-prod-2.png"] ;
@@ -212,14 +219,6 @@ function createProdudctCard(item,index){
 //------------ for cart logic  ---------------//
 let cart = JSON.parse(localStorage.getItem("cart")) || [] ;
 let cartProducts = cart.products ;
-
-let emptyCartDiv = document.querySelector(".empty-cart") ;
-if(cartProducts.length !== 0){
-    emptyCartDiv.className = "hide";
-    appendProductsInCart(cartProducts)
-}else{
-    emptyCartDiv.className = "show";
-}
 
  function appendProductsInCart(cartProducts){
     let cartProductListDiv = document.querySelector(".cart-product-list")

@@ -1,16 +1,32 @@
+//------------ URL'S ---------------//
+let baseURL = "https://boat-mock-server.onrender.com" ;
+let headphonesURL = `${baseURL}/headphones`;
+let airpodsURL = `${baseURL}/airpods`;
+let bluetoothSpeakersURL = `${baseURL}/bluetoothSpeaker`;
+let smartWatchURL = `${baseURL}/smartWatches`;
+let userURL = `${baseURL}/users`;
+let cartURL = `${baseURL}/carts`;
 
 let paymentContainer = document.querySelector(".container") ;
+
+let paymentAmount = JSON.parse(localStorage.getItem("paymentAmount"))
+let totalAmount = document.querySelector("#total-amount")
+totalAmount.innerText = `$ ${paymentAmount}`
+
+let submitButton = document.querySelector("button");
+submitButton.textContent = `Make Payment  $ ${paymentAmount}`;
+
 
 let paymentCard = document.querySelectorAll(".card") ;
 // paymentCard.addEventListener("click", ()=>{
 //     paymentContainer.classList.add("scale-up")
 // })
 
+//--- for display card form ---//
 paymentCard.forEach( (card,index)=>{
     let submitDetailsDiv = document.querySelector(".submit-details") ;
     card.addEventListener("click", ()=>{ 
 
-        // card.classList.toggle("scale-up") ;
         submitDetailsDiv.innerHTML = "" ;
         console.log("clicked")
         // Create labels and input elements
@@ -68,7 +84,10 @@ paymentCard.forEach( (card,index)=>{
 
         let submitButton = document.createElement("button");
         submitButton.className = "submit-button";
-        submitButton.textContent = "Make Payment ₹ 8888";
+        submitButton.textContent = `Make Payment ${paymentAmount}`;
+        submitButton.addEventListener("click", ()=>{
+            makePaymentForUser()
+        })
 
         // Append created elements to the submitDetailsDiv
         submitDetailsDiv.append(nameLabel);
@@ -82,25 +101,33 @@ paymentCard.forEach( (card,index)=>{
 })
 
 
+let makePaymentBtn = document.querySelector(".submit-button") ;
+makePaymentBtn.addEventListener("click", ()=>{
+    makePaymentForUser()
+})
 
-
-
-
-
-
-// function makePayment() {
-//     // Add your payment processing logic here
-//     // You can access the input values using document.getElementById or other methods
-//     var cardName = document.getElementById('card-name').value;
-//     var cardNumber = document.getElementById('card-number').value;
-//     var cardExpiry = document.getElementById('card-expiry').value;
-//     var cardCVC = document.getElementById('card-cvc').value;
-
-//     // Perform payment processing or validation as needed
-//     // For now, let's just log the input values
-//     console.log("Name on Card:", cardName);
-//     console.log("Card Number:", cardNumber);
-//     console.log("Expiry Date:", cardExpiry);
-//     console.log("CVC:", cardCVC);
-// }
+function  makePaymentForUser(){
+    localStorage.removeItem("paymentAmount")
+    let cart = JSON.parse(localStorage.getItem("cart"))
+    cart.products = [] ;
+    updateCartOfUser(cart)
+    alert("Payment Successfull")
+    setTimeout(()=>{
+        window.location.href = "index.html"
+    },2000)
+}
+async function updateCartOfUser(cart) {
+    try {
+        let res = await fetch(`${cartURL}/${cart.id}`,{
+            method:"PUT",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(cart)
+        });
+        let data = await res.json();
+        console.log(data);
+        localStorage.setItem("cart", JSON.stringify(cart));
+    } catch(error) {
+        console.log(error);
+    }
+}
 

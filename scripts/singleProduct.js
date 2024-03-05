@@ -6,11 +6,16 @@ let airpodsURL = `${baseURL}/airpods`;
 let bluetoothSpeakersURL = `${baseURL}/bluetoothSpeaker`;
 let smartWatchURL = `${baseURL}/smartWatches`;
 let userURL = `${baseURL}/users`;
-
+let cartURL = `${baseURL}/carts`;
 //----------- for showing logged in user  -----------//
 //----------- for redirecting to profile and admin  -----------//
 let signinBtn = document.querySelector(".navbar-signin-btn") ;
 let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
+let cartCount = document.querySelector("#cart-count");
+if(loggedInUser){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cartCount.innerText = cart.products.length;
+}
 if(loggedInUser){
     signinBtn.innerText = `Hi ${loggedInUser.firstName}`
 }
@@ -19,8 +24,6 @@ signinBtn.addEventListener("click", ()=>{
         window.location.href = "login.html";
     }else if (signinBtn.innerText === "Admin"){
         window.location.href = "admin.html";
-    }else{
-        window.location.href = "profile.html";
     }
 })
 //----------- for showing clicekd product  -----------//
@@ -59,10 +62,24 @@ function displaySingleProduct(data){
         addToCart(data,quantityValue);
     })
 }
+
+async function updateCartInDatabase(cart){
+    try{
+        let response = await fetch(`${cartURL}/${cart.id}`, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(cart)
+        })
+        let data = await response.json();
+        console.log(data);
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }catch(error){
+        console.log(error);
+    }
+
+}
 //------------ add to cart logic  ---------------//
 function addToCart(data,quantityValue=1){
-    // let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
-    // console.log(loggedInUser)
     if( !loggedInUser ){
         toastIntoAction("Please Login First", "alert");
         setTimeout(() => {
@@ -82,14 +99,18 @@ function addToCart(data,quantityValue=1){
             if(flag){
                 toastIntoAction("Product Already Added", "alert");
             }else{
-                cart.products.push(data);
+                cart.products.push(data)
+                console.log(cart);
+                cartCount.innerText = cart.products.length;
+                updateCartInDatabase(cart) ;
                 toastIntoAction("Product Added To Cart", "success");
-                localStorage.setItem("cart", JSON.stringify(cart));
             }
         }else {
-            cart.products.push(data);
+            console.log(cart);
+            cart.products.push(data)
+            cartCount.innerText = cart.products.length;
+            updateCartInDatabase(cart) ;
             toastIntoAction("Product Added To Cart", "success");
-            localStorage.setItem("cart", JSON.stringify(cart));
         }
     }
 }

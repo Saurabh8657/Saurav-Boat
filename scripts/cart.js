@@ -9,7 +9,11 @@ let userURL = `${baseURL}/users`;
 let cartURL = `${baseURL}/carts`;
 
 let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
-
+let cartCount = document.querySelector("#cart-count");
+if(loggedInUser){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cartCount.innerText = cart.products.length;
+}
 //----------- for showing logged in user  -----------//
 //----------- for redirecting to profile and admin -----------//
 let signinBtn = document.querySelector(".navbar-signin-btn") ;
@@ -21,8 +25,6 @@ signinBtn.addEventListener("click", ()=>{
         window.location.href = "login.html";
     }else if (signinBtn.innerText === "Admin"){
         window.location.href = "admin.html";
-    }else{
-        window.location.href = "profile.html";
     }
 })
 
@@ -47,20 +49,33 @@ let discountAmountValue = 0;
 let DeliveryAmountValue = 0;
 let totalAmountValue = 0;
 
-if(cartProducts.length === 0){
-    cartProductListDiv.innerHTML = "";
-    let addToCartMessage = document.createElement("h2");
-    addToCartMessage.innerText = "No items in cart";
-    cartProductListDiv.append(addToCartMessage);
-    subTotalAmount.innerText = `₹ ${subTotalAmountValue}`;
-    discountAmount.innerText = `₹ ${discountAmountValue}`;
-    DeliveryAmount.innerText = `₹ ${DeliveryAmountValue}`;
-    totalAmount.innerText = `₹ ${totalAmountValue}`;
-}else{
-    cartProductListDiv.innerHTML = "";
-    appendProductsInCart(cartProducts,cartProductListDiv);
-    findTotalAmounts(cartProducts);
+function mainCartFunction(){
+    if(!loggedInUser){
+        cartProductListDiv.innerHTML = "";
+        let addToCartMessage = document.createElement("h2");
+        addToCartMessage.innerText = "Please Login To Add Products In Cart";
+        cartProductListDiv.append(addToCartMessage);
+    }else{
+        cart = JSON.parse(localStorage.getItem("cart")) || [] ;
+        cartProducts = cart.products || []
+        if(cartProducts.length === 0){
+            cartProductListDiv.innerHTML = "";
+            let addToCartMessage = document.createElement("h2");
+            addToCartMessage.innerText = "No items in cart";
+            cartProductListDiv.append(addToCartMessage);
+            subTotalAmount.innerText = `₹ ${subTotalAmountValue}`;
+            discountAmount.innerText = `₹ ${discountAmountValue}`;
+            DeliveryAmount.innerText = `₹ ${DeliveryAmountValue}`;
+            totalAmount.innerText = `₹ ${totalAmountValue}`;
+        }else{
+            cartProductListDiv.innerHTML = "";
+            appendProductsInCart(cartProducts,cartProductListDiv);
+            findTotalAmounts(cartProducts);
+        }
+    }
+    
 }
+mainCartFunction()
 
  function appendProductsInCart(cartProductsList,cartProductListDiv){
     
@@ -98,14 +113,16 @@ function createCartProductsCard(item,index){
     quantityDecreaseBtn.addEventListener("click", ()=>{
         if(quantityValue.innerText > 1){
             quantityValue.innerText = parseInt(quantityValue.innerText) - 1;
-            updateQuantityInCart(item,index,quantityValue.innerText);
+            updateQuantityInCart(item,index,quantityValue.innerText)
+            findTotalAmounts(cartProducts)
         }else{
             quantityValue.innerText = 1
         }
     })
     quantityIncreaseBtn.addEventListener("click", ()=>{
         quantityValue.innerText = parseInt(quantityValue.innerText) + 1;
-        updateQuantityInCart(item,index,quantityValue.innerText);
+        updateQuantityInCart(item,index,quantityValue.innerText)
+        findTotalAmounts(cartProducts) 
     })
     
     let productTotalDiv = document.createElement("div");
@@ -117,11 +134,13 @@ function createCartProductsCard(item,index){
     multiplyMark.innerText = "x" ;
     let itemTotalPrice = document.createElement("span");
     itemTotalPrice.className = "cart-product-price";
-    const numericValue = parseFloat(item.price.replace(/[^\d.]/g, ''));
-    itemTotalPrice.innerText = `${numericValue*item.quantity}`;
+    itemTotalPrice.innerText = ` ${item.price}`;
 
     let deleteIcon = document.createElement("i");
     deleteIcon.className = "fa-solid fa-trash ";
+    deleteIcon.addEventListener("click", ()=>{
+        deleteItemInCart(item,index)
+    })
     
     thumbnail.append(cardImg);
     productNameDiv.append(productName);
@@ -143,16 +162,28 @@ function findTotalAmounts(cartProducts){
         const numericValue = parseFloat(cartProducts[i].price.replace(/[^\d.]/g, ''));
         const quantity = cartProducts[i].quantity ;
         subTotalAmountValue += numericValue*quantity ;
+        console.log(numericValue,quantity,subTotalAmountValue)
     }
+    subTotalAmount.innerText = "" ;
+    discountAmount.innerText = "";
+    DeliveryAmount.innerText = "";
+    totalAmount.innerText = "" ;
     subTotalAmount.innerText = `$ ${Math.round(subTotalAmountValue)}`;
     discountAmount.innerText = `$ ${discountAmountValue}`;
     DeliveryAmount.innerText = `$ ${DeliveryAmountValue}`;
     totalAmount.innerText = `$ ${Math.round(subTotalAmountValue - discountAmountValue + DeliveryAmountValue)}`;
+
 }
 
 let checkoutBtn = document.querySelector(".checkout-btn");
 checkoutBtn.addEventListener( "click", ()=>{
-    window.location.href = "payment.html";
+    let paymentAmount = document.querySelector(".total-amount").innerText.replace("$ ",""); 
+    if(paymentAmount === ""){
+        alert("Please add items in cart");
+    }else{
+        localStorage.setItem("paymentAmount", paymentAmount);
+        window.location.href = "payment.html";
+    }
 })
 
 //----- for updating quantity in cart  -------//
@@ -164,30 +195,62 @@ async function updateQuantityInCart(item,index,quantityValue){
         let response = await fetch(`${cartURL}/${cart.id}`, {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(cart),
-            
+            body: JSON.stringify(cart)
         })
+        let data = await response.json();
+        console.log(data);
+        mainCartFunction()
     }catch(error){
         console.log(error);
     }
 
 }
 
-// async function fetchCartOfLoggedInUser() {
-//     try {
-//         let res = await fetch(`${baseURL}/carts`);
-//         let data = await res.json();
-//         console.log("Carts",data);
-//         for (const cart of data) {
-//             if (cart.userId === loggedInUser.id) {
-//                 localStorage.setItem("cart", JSON.stringify(cart));
-//                 break;
-//             }
-//         }
-//     } catch(error) {
-//         console.log(error);
-//     }
-// }
-// if(loggedInUser){
-//     fetchCartOfLoggedInUser();
-// }
+//----- for deleting item in cart  -------//
+async function deleteItemInCart(item,index){
+    cartProducts.splice(index,1);
+    cart.products = cartProducts ;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    try{
+        let response = await fetch(`${cartURL}/${cart.id}`, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(cart)
+        })
+        let data = await response.json();
+        console.log(data);
+        mainCartFunction()
+    }catch(error){
+        console.log(error);
+    }
+
+}
+
+
+//--- for cupon apply ---//
+let applyCuponBtn = document.querySelector(".apply-cupon-btn");
+let inputCupon = document.querySelector(".input-cupon");
+applyCuponBtn.addEventListener("click", ()=>{
+    let inputCuponValue = inputCupon.value ;
+    let updatedTotalAmount = document.querySelector(".total-amount")
+    totalAmountValue = updatedTotalAmount.innerText.replace("$ ","")
+    let updatedDiscountAmount = document.querySelector(".discount-amount")
+    discountAmountValue = parseInt(updatedDiscountAmount.innerText.replace("$ ",""))
+    if(inputCuponValue === "BOAT50" ){
+        if(totalAmountValue > 500){
+            totalAmount.innerText = `$ ${totalAmountValue - 50}`;
+            discountAmount.innerText = `$ ${discountAmountValue + 50}`
+        }else{
+            alert("Coupon redeamable for Total Amount more than 500")
+        }
+    }else if(inputCuponValue === "BOAT100" ){
+        if(totalAmountValue > 1000){
+            totalAmount.innerText = `$ ${totalAmountValue - 100}`;
+            discountAmount.innerText = `$ ${discountAmountValue + 100}`
+        }else{
+            alert("Coupon redeamable for Total Amount more than 1000")
+        }
+    }else {
+        alert("Invalid Cupon")
+    }
+})

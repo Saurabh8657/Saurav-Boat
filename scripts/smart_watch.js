@@ -15,8 +15,10 @@ let smartWatcheList ;
 
 let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
 let  = JSON.parse(localStorage.getItem("user")) || null ;
+let cartCount = document.querySelector("#cart-count");
 if(loggedInUser){
-    fetchCartOfLoggedInUser();
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cartCount.innerText = cart.products.length;
 }
 
 //------------ essentials fetching  ---------------//
@@ -36,25 +38,6 @@ async function fetchProductsSmartWatches() {
 }
 fetchProductsSmartWatches();
 
-async function fetchCartOfLoggedInUser() {
-    try {
-        let res = await fetch(`${baseURL}/carts`);
-        let data = await res.json();
-        console.log("Carts",data);
-        for (const cart of data) {
-            if (cart.userId === loggedInUser.id) {
-                loggedInUserCart = cart;
-                localStorage.setItem("cart", JSON.stringify(cart));
-                break;
-            }
-        }
-    } catch(error) {
-        console.log(error);
-    }
-}
-
-
-
 //----------- for showing logged in user  -----------//
 //----------- for redirecting to profile and admin  -----------//
 let signinBtn = document.querySelector(".navbar-signin-btn") ;
@@ -66,8 +49,6 @@ signinBtn.addEventListener("click", ()=>{
         window.location.href = "login.html";
     }else if (signinBtn.innerText === "Admin"){
         window.location.href = "admin.html";
-    }else{
-        window.location.href = "profile.html";
     }
 })
 
