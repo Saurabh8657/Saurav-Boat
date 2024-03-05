@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/e41a797fac.js" crossorigin="anonymous"></script>
     
-    <link rel="stylesheet" href="/styles/index.css">
+    
     <link rel="stylesheet" href="/styles/cart.css">
     <title>Boat Cart</title>
 </head>
@@ -15,8 +15,8 @@
             <ul class="left">
                 <li><a href="index.html"> <i class="fa-solid fa-house"></i> Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="" id="navbar-categories" >Categories</a></li>
-                <li><a href="" id="navbar-signin" > <i class="fa-solid fa-user"></i> signin/signup</a></li>
+                <li><a href="#categories" id="navbar-categories-btn" >Categories</a></li>
+                <li><span class="navbar-signin-btn" > signin/signup</span>   </li>
             </ul>
             <div class="center">BOAT_LIFESTYLE.</div>
             <div class="right">
@@ -29,224 +29,134 @@
             </div>
         </div>
     </header>
-     <!-- ////////  for search result will show on search click -->
-    <div class="search-result-content">
-        <input type="text" class="search-input" placeholder="search any category">
-        <div class="search-heading-div">
-            <span class="search-result-heading">Search Results</span> 
-            <span class="search-result-close"><i class="fa-solid fa-xmark"></i></span>
-        </div>
-        <div class="search-result-list">
-            <div class="search-result-card">
-                <div class="image-container">
-                    <img src="../img/products/earbuds-prod-3.webp" alt="">
-                </div>
-                <div class="product-detalis">
-                    <div class="name">Product Name</div>
-                    <div class="description">Product desc</div>
+    <div class="parent-container">
+        <div class="container">
+            <div class="cart-div">
+                <div class="heading-div">Your Cart</div>
+                <hr>
+                <div class="cart-products-list-div">
+                    <div class="product-card">
+                        <div class="img-container">
+                            <img src="/img/headphones/14.webp" alt="">
+                        </div>
+                        <div class="details-div margin-top">
+                            <div class="name">Product Name</div>
+                        </div>
+                        <div class="quantity-buttons margin-top">
+                            <span>-</span>
+                            <span>5</span>
+                            <span>+</span>
+                        </div>
+                        <div class="product-total-div margin-top">
+                            <span class="cart-product-quantity">3</span>
+                            <span>x</span>
+                            <span class="cart-product-price" >&#8377;8000</span>
+                        </div>
+                        <i class="fa-solid fa-trash margin-top"></i>
+                    </div>
+                    <hr>
+                    <div class="product-card">
+                        <div class="img-container">
+                            <img src="/img/headphones/14.webp" alt="">
+                        </div>
+                        <div class="details-div margin-top">
+                            <div class="name">Product Name</div>
+                        </div>
+                        <div class="quantity-buttons margin-top">
+                            <span>-</span>
+                            <span>5</span>
+                            <span>+</span>
+                        </div>
+                        <div class="product-total-div margin-top">
+                            <span>3</span>
+                            <span>x</span>
+                            <span class="higlight" >&#8377;8000</span>
+                        </div>
+                        <i class="fa-solid fa-trash margin-top"></i>
+                    </div>
+                    <hr>
+                    <div class="product-card">
+                        <div class="img-container">
+                            <img src="/img/headphones/14.webp" alt="">
+                        </div>
+                        <div class="details-div margin-top">
+                            <div class="name">Product Name</div>
+                        </div>
+                        <div class="quantity-buttons margin-top">
+                            <span>-</span>
+                            <span>5</span>
+                            <span>+</span>
+                        </div>
+                        <div class="product-total-div margin-top">
+                            <span>3</span>
+                            <span>x</span>
+                            <span class="higlight" >&#8377;8000</span>
+                        </div>
+                        <i class="fa-solid fa-trash margin-top"></i>
+                    </div>
+                    <hr>
+                    <div class="product-card">
+                        <div class="img-container">
+                            <img src="/img/headphones/14.webp" alt="">
+                        </div>
+                        <div class="details-div margin-top">
+                            <div class="name">Product Name</div>
+                        </div>
+                        <div class="quantity-buttons margin-top">
+                            <span>-</span>
+                            <span>5</span>
+                            <span>+</span>
+                        </div>
+                        <div class="product-total-div margin-top">
+                            <span>3</span>
+                            <span>x</span>
+                            <span class="higlight" >&#8377;8000</span>
+                        </div>
+                        <i class="fa-solid fa-trash margin-top"></i>
+                    </div>
+                    <hr>
                 </div>
             </div>
 
-            <div class="search-result-card">
-                <div class="image-container">
-                    <img src="../img/products/earbuds-prod-3.webp" alt="">
+            <div class="summary-div">
+                <div class="heading-div">Summary</div>
+                <hr>
+                <div class="subtotal-div">
+                    <span>Sub Total </span>
+                    <span class="sub-total-amount">&#8377;8000</span>
                 </div>
-                <div class="product-detalis">
-                    <div class="name">Product Name</div>
-                    <div class="description">Product desc</div>
+                <div class="subtotal-div">
+                    <span>Discount </span>
+                    <span class="discount-amount">&#8377;1000</span>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- ////////  for login modal will show on login click -->
+                <div class="subtotal-div">
+                    <span>Delivery Charge </span>
+                    <span class="Delivery-amount">&#8377;1000</span>
+                </div>
+                
 
-    <div class="login-container">
-        <div class="container" id="container">
-            <div class="form-container sign-up">
-                <form>
-                    <h1>Create Account</h1>
-                    <div class="social-icons">
-                        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-instagram"></i></a>
-                    </div>
-                    <span>or use your email for registeration</span>
-                    <input type="text" placeholder="Name">
-                    <input type="email" placeholder="Email">
-                    <input type="password" placeholder="Password">
-                    <button>Sign Up</button>
-                </form>
-            </div>
-            <div class="form-container sign-in">
-                <form>
-                    <h1>Sign In</h1>
-                    <div class="social-icons">
-                        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-instagram"></i></a>
-                    </div>
-                    <span>or use your email password</span>
-                    <input type="email" placeholder="Email">
-                    <input type="password" placeholder="Password">
-                    <a href="#">→ Forget Your Password? ←</a>
-                    <button>Sign In</button>
-                </form>
-            </div>
-            <div class="toggle-container">
-                <div class="toggle">
-                    <div class="toggle-panel toggle-left">
-                        <h1>Welcome Back!</h1>
-                        <p>Login to use all of site features</p>
-                        <button class="hidden" id="login">Sign In</button>
-                    </div>
-                    <div class="toggle-panel toggle-right">
-                        <h1>Hello, Friend!</h1>
-                        <p>Register with BOAT to use all of site features</p>
-                        <button class="hidden" id="register">Sign Up</button>
+                <div class="cart-cupon-div">
+                    <span>Got Any Cupons</span>
+                    <div class="right">
+                        <input type="text" class="input-cupon" placeholder="redeam here" id="input-cupon" >
+                        <button class="apply-cupon-btn">Apply</button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="cart-container">
-        <div class="layout">
-            <div class="cart-headings">
-                <h2>Shopping Cart</h2>
-                <div class="cupon-div">
-                    <input type="text" class="input-cupon" placeholder="got any cupons"> 
-                    <button class="apply-btn">Apply Cupon</button>
-                </div>
-                <div class="total-div">
-                    <span class="subtotal">SubTotal : </span>
-                    <span class="cart-total-amount">&#8377; 8000</span>
-                    <button id="checkout">CheckOut</button>
-                </div>
-            </div>
-            <div class="card-container">
-                <div class="card">
-                    <div class="card-img">
-                        <img src="../img/products/earbuds-prod-4.webp" alt="">
-                        
-                    </div>
-                    <div class="card-details">
-                        <p class="name">Product Name</p>
-                        <p class="description">descripton Lorem ipsum dolor sit amet.</p>
-                        
-                        <span class="discount-price">Discount Price</span>
-                        <span class="price">Produdct Price</span> 
-                        <div class="quantity-buttons">
-                            <button class="decrease-btn">-</button>
-                            <button class="quantity-btn">5</button>
-                            <button class="increase-btn">+</button>
-                            <button class="remove-btn">Remove</button>
-                        </div>
-                        <div class="total-amount-div">
-                            <span>Total Amount</span> <span class="total-amount">&#8377;55555</span>
-                        </div>
-                        
-                    </div>
-                </div>
-    
-    
-                <div class="card">
-                    <div class="card-img">
-                        <img src="../img/products/earbuds-prod-4.webp" alt="">
-                        
-                    </div>
-                    <div class="card-details">
-                        <p class="name">Product Name</p>
-                        <p class="description">descripton Lorem ipsum dolor sit amet.</p>
-                        
-                        <span class="discount-price">Discount Price</span>
-                        <span class="price">Produdct Price</span> 
-                        <div class="quantity-buttons">
-                            <button class="decrease-btn">-</button>
-                            <button class="quantity-btn">5</button>
-                            <button class="increase-btn">+</button>
-                            <button class="remove-btn">Remove</button>
-                        </div>
-                        <div class="total-amount-div">
-                            <span>Total Amount</span> <span class="total-amount">&#8377;55555</span>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
 
-    <div class="newsletter-section">
-        <div class="newsletter-content">
-            <span class="small-text"> Newsletter</span>
-            <span class="big-text">Sign up for latest updates and offers</span>
-            <div class="form">
-                <input type="text" placeholder="Email Address">
-                <button>Subscribe</button>
-            </div>
-            <div class="text">Will be used in accoradance with out Privacy Policy</div>
-            <div class="social-icons">
-                <div class="icon"> <i class="fa-brands fa-facebook"> </i> </div>
-                <div class="icon"> <i class="fa-brands fa-instagram"></i> </div>
-                <div class="icon"> <i class="fa-brands fa-twitter"></i> </div>
-                <div class="icon"> <i class="fa-brands fa-linkedin"></i> </div> 
+                <div class="subtotal-div">
+                    <span>Total Amount </span>
+                    <span class="total-amount">&#8377;8000</span>
+                </div>
+
+                <button class="checkout-btn">CheckOut</button>
+
+
             </div>
         </div>
     </div>
 
-    <footer class="footer-content">
-        <div class="col">
-            <div class="title">About</div>
-            <div class="text">
-                Welcome to our online store, where style meets convenience! Discover a curated collection of trendy fashion, electronics, and lifestyle essentials. Browse through our user-friendly platform, explore exclusive deals, and enjoy hassle-free shopping with secure payments. Elevate your shopping experience with us today!
-            </div>
-        </div>
-        <div class="col">
-            <div class="title">Contact</div>
-            <div class="c-item">
-                <i class="fa-solid fa-location-dot"></i>
-                <div class="text">
-                    123 Shopper's Street,
-                    Cityville, State 12345,
-                    Country Centralia.
-                </div>
-            </div>
-            <div class="c-item">
-                <i class="fa-solid fa-phone"></i>
-                <div class="text">
-                    Phone: +1 (555) 123-4567
-                </div>
-            </div>
-            <div class="c-item">
-                <i class="fa-solid fa-envelope"></i>
-                <div class="text">
-                    Email: support@yourstore.com
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="title">Categories</div>
-            
-            <div class="text">Headphones</div>
-            <div class="text">Smart Watches</div>
-            <div class="text">Bluetooth Speakers</div>
-            <div class="text">Wireless Earbuds</div>
-            <div class="text">Home Theaters</div>
-            <div class="text">Projectors</div>
-        </div>
-        <div class="col">
-            <div class="title">Pages</div>
-            <div class="text">Home</div>
-            <div class="text">About</div>
-            <div class="text">Privacy Policy</div>
-            <div class="text">Returns</div>
-            <div class="text">Terms Conditions</div>
-            <div class="text">Contact Us</div>
-        </div>
-    </footer>
 
-
-    
+    <script src="/scripts/cart.js"></script>
 </body>
 </html>

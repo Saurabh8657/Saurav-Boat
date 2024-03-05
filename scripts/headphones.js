@@ -68,13 +68,8 @@ signinBtn.addEventListener("click", ()=>{
 
 //------------- for cart modal  -----------------//
 let cartIcon = document.querySelector("#navbar-cart-icon") ;
-
-let cartPanel = document.querySelector(".cart-panel") ;
-let opacLayer = document.querySelector(".opac-layer") ;
-let cartContent = document.querySelector(".cart-content") ;
-
 cartIcon.addEventListener( "click", ()=>{
-    cartPanel.classList.add("show-cart") 
+    window.location.href = "cart.html";
 }) 
 
 //----------- for debouncing realtime searach  ----------//
@@ -160,13 +155,6 @@ searchIcon.addEventListener( "click", ()=>{
 searchResultClose.addEventListener( "click", ()=>{
     searchResultContent.classList.add("hide")
 })
-
-//------------- for redirecting to payment page  -----------------//
-let checkoutBtn = document.querySelector(".checkout-btn") ;
-checkoutBtn.addEventListener( "click", ()=>{
-    window.location.href = "payment.html" ;
-})
-
 
 //------------- for banner crausal -----------------//
 // const bannerImgArray =["../img/banner-img.png","../img/banner-img.png","../img/banner-image-3.webp","../img/banner-image-5.webp","../img/banner-image-7.webp","../img/products/earbuds-prod-3.webp","../img/products/speaker-prod-1.webp","../img/products/headphone-prod-3.webp","../img/products/watch-prod-2.webp","../img/products/earbuds-prod-4.webp","../img/products/earbuds-prod-2.png"] ;
