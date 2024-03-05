@@ -308,11 +308,9 @@
 }
 .alert{
     background-color:#e23636;
-    
 }
 .success{
-    background-color: green;
-    
+    background-color: green;  
 }
 .hiddentoast{
 display: none;
@@ -336,7 +334,7 @@ display: none;
       opacity: 1;
        /* top: 10%; */
     }
-  }
+}
 @keyframes slideFromRight{
     0%{
         transform: translateX(100%);

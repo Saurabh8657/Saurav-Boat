@@ -43,7 +43,7 @@ siginBtn.addEventListener("click", (e) => {
     toastIntoAction("Login Successful", "success");
     setTimeout(() => {
       window.location.href = "index.html";
-    },1200)
+    },2000)
    
   } else {
     toastIntoAction("User doesnot exist or Invalid Credentials", "alert");

@@ -7,6 +7,23 @@ let bluetoothSpeakersURL = `${baseURL}/bluetoothSpeaker`;
 let smartWatchURL = `${baseURL}/smartWatches`;
 let userURL = `${baseURL}/users`;
 
+//----------- for showing logged in user  -----------//
+//----------- for redirecting to profile and admin  -----------//
+let signinBtn = document.querySelector(".navbar-signin-btn") ;
+let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
+if(loggedInUser){
+    signinBtn.innerText = `Hi ${loggedInUser.firstName}`
+}
+signinBtn.addEventListener("click", ()=>{
+    if(signinBtn.innerText === "SIGNIN/SIGNUP"){
+        window.location.href = "login.html";
+    }else if (signinBtn.innerText === "Admin"){
+        window.location.href = "admin.html";
+    }else{
+        window.location.href = "profile.html";
+    }
+})
+//----------- for showing clicekd product  -----------//
 let singleProduct = JSON.parse(localStorage.getItem("clickedProduct"))
 let relatedProductList  ;
 displaySingleProduct(singleProduct)
@@ -22,9 +39,76 @@ function displaySingleProduct(data){
     singleProductPrice.innerText = data.price
     singleProductDesc.innerText = data.description
 
-    let quantityIncreaseBtn = document.getElementById("quantity-decrease-button");
+    let quantityIncreaseBtn = document.getElementById("quantity-increase-button");
+    let quantityDecreaseBtn = document.getElementById("quantity-decrease-button");
     let quantityValue = document.getElementById("quantity-value");
-    let quantityDecreaseBtn = document.getElementById("quantity-increase-button");
+    let addToCartBtn = document.getElementById("add-to-cart-btn");
+
+    quantityDecreaseBtn.addEventListener("click", ()=>{
+        if(quantityValue.innerText > 1){
+            quantityValue.innerText = parseInt(quantityValue.innerText) - 1;
+        }else{
+            quantityValue.innerText = 1
+        }
+    })
+    quantityIncreaseBtn.addEventListener("click", ()=>{
+        quantityValue.innerText = parseInt(quantityValue.innerText) + 1;
+    })
+
+    addToCartBtn.addEventListener("click", ()=>{
+        addToCart(data,quantityValue);
+    })
+}
+//------------ add to cart logic  ---------------//
+function addToCart(data,quantityValue=1){
+    // let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
+    // console.log(loggedInUser)
+    if( !loggedInUser ){
+        toastIntoAction("Please Login First", "alert");
+        setTimeout(() => {
+            window.location.href = "login.html";
+        },2000)
+    }else{
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        data.quantity = parseInt(quantityValue.innerText) 
+        if(cart.products.length > 0){
+            let flag = false;
+            for(let i = 0; i < cart.products.length; i++){
+                if(cart.products[i].productName === data.productName ){
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag){
+                toastIntoAction("Product Already Added", "alert");
+            }else{
+                cart.products.push(data);
+                toastIntoAction("Product Added To Cart", "success");
+                localStorage.setItem("cart", JSON.stringify(cart));
+            }
+        }else {
+            cart.products.push(data);
+            toastIntoAction("Product Added To Cart", "success");
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
+    }
+}
+/// Toast
+let toast = document.querySelector(".toast");
+let toastText = document.querySelector(".toast-text");
+let toastClose = document.querySelector(".toast-close");
+
+function toastIntoAction(params, type){
+  toastText.innerText = params;
+  //  toast.classList.remove("hidden");
+  toast.className = "";
+  toast.classList.add(`${type}`, "toast");
+  toastClose.addEventListener("click", ()=>{
+     toast.classList.add("hiddentoast");
+  })
+  setTimeout(()=>{
+      toast.classList.add("hiddentoast");
+  },4000)
 }
 //------------ essentials fetching  ---------------//
 async function fetchRelatedProducts() {

@@ -14,10 +14,6 @@ let bluetoothSpeakerList ;
 let smartWatcheList ;
 
 let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
-let loggedInUserCart = JSON.parse(localStorage.getItem("user")) || null ;
-if(loggedInUser){
-    fetchCartOfLoggedInUser();
-}
 
 //------------ essentials fetching  ---------------//
 async function fetchProductsAirpods() {
@@ -33,23 +29,6 @@ async function fetchProductsAirpods() {
     }
 }
 fetchProductsAirpods();
-
-async function fetchCartOfLoggedInUser() {
-    try {
-        let res = await fetch(`${baseURL}/carts`);
-        let data = await res.json();
-        console.log("Carts",data);
-        for (const cart of data) {
-            if (cart.userId === loggedInUser.id) {
-                loggedInUserCart = cart;
-                localStorage.setItem("cart", JSON.stringify(cart));
-                break;
-            }
-        }
-    } catch(error) {
-        console.log(error);
-    }
-}
 
 //----------- for debouncing realtime searach  ----------//
 let searchAirpodsList ;
@@ -219,8 +198,6 @@ function appendProductsToDOM(productList, appendingDiv) {
     });
 }
 
-
-
 function createProdudctCard(item,index){
     let card = document.createElement("div");
     card.className = "product-card";
@@ -248,4 +225,80 @@ function createProdudctCard(item,index){
     return card ;
 }
 
-console.log(airpodsList)
+
+//------------ for cart logic  ---------------//
+let cart = JSON.parse(localStorage.getItem("cart")) || [] ;
+let cartProducts = cart.products ;
+
+let emptyCartDiv = document.querySelector(".empty-cart") ;
+if(cartProducts.length !== 0){
+    emptyCartDiv.className = "hide";
+    appendProductsInCart(cartProducts)
+}else{
+    emptyCartDiv.className = "show";
+}
+
+ function appendProductsInCart(cartProducts){
+    let cartProductListDiv = document.querySelector(".cart-product-list")
+    cartProductListDiv.innerHTML = "";
+    cartProducts?.forEach( (item,index) => {
+        let card = createProdudctCardInCart(item,index);
+        cartProductListDiv.append(card);
+    })
+}
+
+function createProdudctCardInCart(item,index){
+    let card = document.createElement("div");
+    card.className = "cart-product-card";
+
+    let thumbnail = document.createElement("div");
+    thumbnail.className = "img-container";
+    let cardImg = document.createElement("img");
+    cardImg.src = `${item.image}`;
+    cardImg.alt = "Product Image";
+
+    let productDetails = document.createElement("div");
+    productDetails.className = "prod-details";
+
+    let name = document.createElement("div");
+    name.className = "name";
+    name.innerText = `${item.productName}`;
+
+    let cross = document.createElement("i");
+    cross.className = "fa-solid fa-xmark";
+
+    let quantityButtonsDiv = document.createElement("div");
+    quantityButtonsDiv.className = "quantity-buttons";
+    let minus = document.createElement("span");
+    minus.innerText = "-";
+    let plus = document.createElement("span");
+    plus.innerText = "+";
+    let itemQuantity = document.createElement("span");
+    itemQuantity.innerText = `${item.quantity}`;
+    
+
+    let textDiv = document.createElement("div");
+    textDiv.className = "text";
+    let cartProductQuantity = document.createElement("span");
+    cartProductQuantity.className = "cart-product-quantity";
+    cartProductQuantity.innerText = `${item.quantity}`;
+    let multiplyMark = document.createElement("span");
+    multiplyMark.innerText = "x" ;
+    let itemTotalPrice = document.createElement("span");
+    itemTotalPrice.className = "cart-product-price";
+    itemTotalPrice.innerText = `${item.price*item.quantity}`;
+
+
+    
+
+    thumbnail.append(cardImg);
+    quantityButtonsDiv.append(minus, itemQuantity, plus);
+    textDiv.append(cartProductQuantity, multiplyMark, itemTotalPrice);
+    productDetails.append(name,cross,quantityButtonsDiv,textDiv);
+
+    card.append(thumbnail,productDetails);
+
+    return card ;
+
+}
+
