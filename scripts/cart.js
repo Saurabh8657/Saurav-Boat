@@ -6,6 +6,7 @@ let airpodsURL = `${baseURL}/airpods`;
 let bluetoothSpeakersURL = `${baseURL}/bluetoothSpeaker`;
 let smartWatchURL = `${baseURL}/smartWatches`;
 let userURL = `${baseURL}/users`;
+let cartURL = `${baseURL}/carts`;
 
 let loggedInUser  = JSON.parse(localStorage.getItem("user")) || null ;
 
@@ -33,7 +34,7 @@ cartIcon.addEventListener( "click", ()=>{
 
 //------------ for cart logic  ---------------//
 let cart = JSON.parse(localStorage.getItem("cart")) || [] ;
-let cartProducts = cart.products ;
+let cartProducts = cart.products || []
 
 let cartProductListDiv = document.querySelector(".cart-products-list-div") ;
 let subTotalAmount = document.querySelector(".sub-total-amount");
@@ -48,7 +49,7 @@ let totalAmountValue = 0;
 
 if(cartProducts.length === 0){
     cartProductListDiv.innerHTML = "";
-    let addToCartMessage = document.createElement("p");
+    let addToCartMessage = document.createElement("h2");
     addToCartMessage.innerText = "No items in cart";
     cartProductListDiv.append(addToCartMessage);
     subTotalAmount.innerText = `₹ ${subTotalAmountValue}`;
@@ -87,12 +88,25 @@ function createCartProductsCard(item,index){
 
     let quantityButtonsDiv = document.createElement("div");
     quantityButtonsDiv.className = "quantity-buttons ";
-    let minus = document.createElement("span");
-    minus.innerText = "-";
-    let plus = document.createElement("span");
-    plus.innerText = "+";
-    let itemQuantity = document.createElement("span");
-    itemQuantity.innerText = `${item.quantity}`;
+    let quantityDecreaseBtn = document.createElement("span");
+    quantityDecreaseBtn.innerText = "-";
+    let quantityIncreaseBtn = document.createElement("span");
+    quantityIncreaseBtn.innerText = "+";
+    let quantityValue = document.createElement("span");
+    quantityValue.innerText = `${item.quantity}`;
+
+    quantityDecreaseBtn.addEventListener("click", ()=>{
+        if(quantityValue.innerText > 1){
+            quantityValue.innerText = parseInt(quantityValue.innerText) - 1;
+            updateQuantityInCart(item,index,quantityValue.innerText);
+        }else{
+            quantityValue.innerText = 1
+        }
+    })
+    quantityIncreaseBtn.addEventListener("click", ()=>{
+        quantityValue.innerText = parseInt(quantityValue.innerText) + 1;
+        updateQuantityInCart(item,index,quantityValue.innerText);
+    })
     
     let productTotalDiv = document.createElement("div");
     productTotalDiv.className = "product-total-div ";
@@ -111,7 +125,7 @@ function createCartProductsCard(item,index){
     
     thumbnail.append(cardImg);
     productNameDiv.append(productName);
-    quantityButtonsDiv.append(minus, itemQuantity, plus);
+    quantityButtonsDiv.append(quantityDecreaseBtn, quantityValue, quantityIncreaseBtn);
     productTotalDiv.append(cartProductQuantity, multiplyMark, itemTotalPrice);
 
     card.append(thumbnail, productNameDiv, quantityButtonsDiv, productTotalDiv, deleteIcon);
@@ -119,6 +133,7 @@ function createCartProductsCard(item,index){
     return card ;
 }
 
+//----- for sumarray amounts of cart -------//
 function findTotalAmounts(cartProducts){
     subTotalAmountValue = 0;
     discountAmountValue = 20;
@@ -139,3 +154,40 @@ let checkoutBtn = document.querySelector(".checkout-btn");
 checkoutBtn.addEventListener( "click", ()=>{
     window.location.href = "payment.html";
 })
+
+//----- for updating quantity in cart  -------//
+async function updateQuantityInCart(item,index,quantityValue){
+    cartProducts[index].quantity = quantityValue ;
+    cart.products = cartProducts ;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    try{
+        let response = await fetch(`${cartURL}/${cart.id}`, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(cart),
+            
+        })
+    }catch(error){
+        console.log(error);
+    }
+
+}
+
+// async function fetchCartOfLoggedInUser() {
+//     try {
+//         let res = await fetch(`${baseURL}/carts`);
+//         let data = await res.json();
+//         console.log("Carts",data);
+//         for (const cart of data) {
+//             if (cart.userId === loggedInUser.id) {
+//                 localStorage.setItem("cart", JSON.stringify(cart));
+//                 break;
+//             }
+//         }
+//     } catch(error) {
+//         console.log(error);
+//     }
+// }
+// if(loggedInUser){
+//     fetchCartOfLoggedInUser();
+// }
