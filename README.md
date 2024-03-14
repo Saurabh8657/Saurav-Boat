@@ -48,26 +48,19 @@ Provide user credentials for authenticated pages:
 ## ScreenShots  
 
 ## Home Page
-![home](https://github.com/Saurabh8657/Saurav_Boat/img/screenshots/home.png)
+![home](https://github.com/Saurabh8657/Saurav_Boat/blob/main/img/screenshots/home.png)
 
 ## Login
-![login]()
+![login](https://github.com/Saurabh8657/Saurav_Boat/blob/main/img/screenshots/home.png)
 
 ## Cart
-![cart]()
+![cart](https://github.com/Saurabh8657/Saurav_Boat/blob/main/img/screenshots/cart.png)
 ## Payment
-![payment and address]()
-## Order History
-![orderhistory]()
-## Admin Dashboard
-![adminDasbhboard]()
+![payment and address](https://github.com/Saurabh8657/Saurav_Boat/blob/main/img/screenshots/checkout.png)
 
 ## Product Page
-![Product Page]()
-## Users/Traffic page
-![Users _ Traffic]()
+![Product Page](https://github.com/Saurabh8657/Saurav_Boat/blob/main/img/screenshots/single.png)
 
 ## Author
 ## [Saurabh Ganguly]
 ## [LinkedIn](http://www.linkedin.com/in/saurabh-ganguly038)
-https://github.com/heyyrahul/python-magician-6789/assets/79692865/317cf7a7-cb6b-4a4e-ae4b-c85877fa166d
