@@ -48,25 +48,26 @@ Provide user credentials for authenticated pages:
 ## ScreenShots  
 
 ## Home Page
-![home](https://github.com/heyyrahul/python-magician-6789/assets/79692865/28405382-84b2-4bc6-a100-112fd12fa802)
+![home](https://github.com/Saurabh8657/Saurav_Boat/img/screenshots/home.png)
 
 ## Login
-![login](https://github.com/heyyrahul/python-magician-6789/assets/79692865/46c6cc49-c0e3-4e26-80b2-22356dc62b1c)
+![login]()
 
 ## Cart
-![cart](https://github.com/heyyrahul/python-magician-6789/assets/79692865/6cb206ac-9e23-44f6-b130-382303f1bf23)
+![cart]()
 ## Payment
-![payment and address](https://github.com/heyyrahul/python-magician-6789/assets/79692865/36f22e4c-00fe-42ad-952e-352a81cb0d93)
+![payment and address]()
 ## Order History
-![orderhistory](https://github.com/heyyrahul/python-magician-6789/assets/79692865/317cf7a7-cb6b-4a4e-ae4b-c85877fa166d)
+![orderhistory]()
 ## Admin Dashboard
-![adminDasbhboard](https://github.com/heyyrahul/python-magician-6789/assets/79692865/08fdc07a-353d-4dc6-9549-924106d5237d)
+![adminDasbhboard]()
 
 ## Product Page
-![Product Page](https://github.com/heyyrahul/python-magician-6789/assets/79692865/a1d6ec4f-7dd1-46ab-a703-e4a071d32faa)
+![Product Page]()
 ## Users/Traffic page
-![Users _ Traffic](https://github.com/heyyrahul/python-magician-6789/assets/79692865/08b8085b-c583-40e9-a3ff-fe769393fc94)
+![Users _ Traffic]()
 
 ## Author
 ## [Saurabh Ganguly]
-## [LinkedIn]()
+## [LinkedIn](http://www.linkedin.com/in/saurabh-ganguly038)
+https://github.com/heyyrahul/python-magician-6789/assets/79692865/317cf7a7-cb6b-4a4e-ae4b-c85877fa166d
